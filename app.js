@@ -430,9 +430,9 @@ let timerInterval = null;
 
 // Particle Properties
 const PARTICLE_COUNT = 65;
-const PARTICLE_COLOR = "rgba(255, 200, 87, 0.75)";
-const NODE_LINE_COLOR = "rgba(122, 60, 251, 0.18)";
-const MOUSE_LINE_COLOR = "rgba(255, 200, 87, 0.4)";
+const PARTICLE_COLOR = "rgba(219, 159, 0, 0.75)";
+const NODE_LINE_COLOR = "rgba(152, 83, 34, 0.18)";
+const MOUSE_LINE_COLOR = "rgba(219, 159, 0, 0.4)";
 
 class NodeParticle {
   constructor(w, h) {
@@ -470,7 +470,7 @@ class NodeParticle {
     if (this.radius > 3.5) {
       ctx.beginPath();
       ctx.arc(this.x, this.y, dynamicRadius * 2, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(255, 200, 87, 0.08)";
+      ctx.fillStyle = "rgba(219, 159, 0, 0.08)";
       ctx.fill();
     }
   }
@@ -484,7 +484,7 @@ class SparkParticle {
     this.vy = (Math.random() - 0.5) * 8;
     this.alpha = 1.0;
     this.decay = Math.random() * 0.03 + 0.015;
-    this.color = Math.random() > 0.4 ? "#ffc857" : "#7a3cfb";
+    this.color = Math.random() > 0.4 ? "#DB9F00" : "#985322";
   }
 
   update() {
@@ -676,7 +676,7 @@ function simulationLoop() {
         canvasContext.beginPath();
         canvasContext.moveTo(p1.x, p1.y);
         canvasContext.lineTo(mouse.x, mouse.y);
-        canvasContext.strokeStyle = `rgba(255, 200, 87, ${alpha})`;
+        canvasContext.strokeStyle = `rgba(219, 159, 0, ${alpha})`;
         canvasContext.lineWidth = 1;
         canvasContext.stroke();
         
@@ -699,7 +699,7 @@ function simulationLoop() {
         canvasContext.beginPath();
         canvasContext.moveTo(p1.x, p1.y);
         canvasContext.lineTo(p2.x, p2.y);
-        canvasContext.strokeStyle = `rgba(122, 60, 251, ${alpha})`;
+        canvasContext.strokeStyle = `rgba(152, 83, 34, ${alpha})`;
         canvasContext.lineWidth = 0.8;
         canvasContext.stroke();
       }
