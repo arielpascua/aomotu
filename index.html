@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AOMOTU.INC - Leading global agency in Digital Advertising, Marketing, and Outsourcing Services. Seamlessly connecting 16 countries.">
+  <title>AOMOTU.INC | Digital Advertising, Marketing & Outsourcing Services</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Gradients and Orbs -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Main Header -->
+  <header class="main-header">
+    <div class="header-left">
+      <span class="status-indicator">
+        <span class="pulse-dot"></span>
+        OPERATING IN 16 COUNTRIES
+      </span>
+    </div>
+    
+    <!-- Redesigned Animated Logo -->
+    <a href="#" class="logo-container">
+      <div class="logo-icon">
+        <svg viewBox="0 0 100 100" width="48" height="48" id="logo-svg">
+          <defs>
+            <radialGradient id="gold-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FFF3D1"/>
+              <stop offset="60%" stop-color="#FFC857"/>
+              <stop offset="100%" stop-color="#B27E12"/>
+            </radialGradient>
+          </defs>
+          <!-- Outer orbital rings -->
+          <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(255,200,87,0.2)" stroke-width="1.5" stroke-dasharray="10, 5" class="orbit-ring-1"/>
+          <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(255,200,87,0.3)" stroke-width="1" class="orbit-ring-2"/>
+          <!-- Central orb -->
+          <circle cx="50" cy="50" r="8" fill="url(#gold-glow)"/>
+          <!-- Connecting web lines -->
+          <path d="M 50 50 L 25 35 M 50 50 L 75 35 M 50 50 L 50 85 M 50 50 L 30 70 M 50 50 L 70 70 M 50 50 L 50 15" stroke="rgba(255,200,87,0.4)" stroke-width="1" />
+          <!-- Satellites -->
+          <circle cx="25" cy="35" r="3.5" fill="#FFC857" class="sat sat-1"/>
+          <circle cx="75" cy="35" r="4" fill="#FFFFFF" class="sat sat-2"/>
+          <circle cx="50" cy="85" r="5" fill="#FFC857" class="sat sat-3"/>
+          <circle cx="30" cy="70" r="3" fill="#FFFFFF" class="sat sat-4"/>
+          <circle cx="70" cy="70" r="4.5" fill="#FFC857" class="sat sat-5"/>
+          <circle cx="50" cy="15" r="3" fill="#FFFFFF" class="sat sat-6"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-main">AOMOTU</span><span class="logo-sub">.INC</span>
+      </div>
+    </a>
+
+    <div class="header-right">
+      <button class="btn btn-primary" id="open-contact-btn">
+        Get in touch
+        <svg class="btn-arrow" viewBox="0 0 24 24" width="16" height="16">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section & Global Presence Controller -->
+  <section class="hero-section" id="hero">
+    <div class="container hero-container">
+      <p class="hero-tagline">Digital Advertising &middot; Marketing &middot; Outsourcing Services</p>
+      
+      <div class="global-selector-box">
+        <span class="selector-overline">OPERATING ACROSS THE GLOBE</span>
+        
+        <div class="selector-display-wrapper">
+          <button class="arrow-btn prev-btn" id="country-prev" aria-label="Previous Country">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          
+          <div class="country-showcase">
+            <h1 class="country-name" id="display-country">India</h1>
+            <p class="country-stats" id="display-stats">11 <span class="divider">/</span> 16 markets</p>
+          </div>
+
+          <button class="arrow-btn next-btn" id="country-next" aria-label="Next Country">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Custom Country Visual Grid Indicator -->
+        <div class="country-dots-grid" id="dots-grid">
+          <!-- Populated by JavaScript -->
+        </div>
+
+        <p class="country-desc" id="display-desc">Connecting global brands to South Asia's digital ecosystem with localized strategies.</p>
+      </div>
+
+      <!-- Elevated Showreel Card -->
+      <div class="showreel-card" id="showreel-trigger">
+        <div class="showreel-header">
+          <span class="showreel-title-tag">SHOWREEL &middot; 2026</span>
+          <span class="showreel-duration">01:48</span>
+        </div>
+        <div class="showreel-body">
+          <div class="play-button-wrapper">
+            <div class="play-pulse"></div>
+            <button class="play-btn-circle" aria-label="Play Showreel">
+              <svg viewBox="0 0 24 24" width="28" height="28" class="play-icon">
+                <path d="M8 5v14l11-7z" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+          <p class="play-callout">Watch the digital video clip</p>
+          <span class="play-subtext">Click to experience our motion design and global campaigns</span>
+        </div>
+        <div class="showreel-footer-strip"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who We Are Section -->
+  <section class="content-section" id="who-we-are">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2 class="section-heading">Who we are</h2>
+      </div>
+      <div class="grid grid-2">
+        <div class="about-lead">
+          <p class="lead-text">AOMOTU is a borderless digital solutions powerhouse. We integrate strategic marketing, creative digital advertising, and hyper-scalable outsourcing to elevate brands globally.</p>
+        </div>
+        <div class="about-details">
+          <p>Founded on the principle of distributed intelligence, we span 16 countries to build bespoke marketing pipelines and localized media hubs. Our unique operational model blends data-driven insights with native execution, ensuring that regional nuances translate to global engagement.</p>
+          <div class="stats-row">
+            <div class="stat-item">
+              <span class="stat-number">16</span>
+              <span class="stat-label">Global Offices</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">450+</span>
+              <span class="stat-label">Talents Worldwide</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">98%</span>
+              <span class="stat-label">Client Retention</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Think Section -->
+  <section class="content-section bg-darker" id="what-we-think">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2 class="section-heading">What we think</h2>
+      </div>
+      <div class="grid grid-3">
+        <article class="think-card">
+          <div class="card-glow"></div>
+          <span class="card-tag">Thought Leadership</span>
+          <h3 class="card-title">Navigating Cross-Border Ad Regulation in 2026</h3>
+          <p class="card-excerpt">How privacy changes are reshaping advertising tactics across different markets, and how local intelligence overcomes targeting barriers.</p>
+          <a href="#" class="card-link">Read insight &rarr;</a>
+        </article>
+        
+        <article class="think-card">
+          <div class="card-glow"></div>
+          <span class="card-tag">Innovation</span>
+          <h3 class="card-title">Distributed Teams vs. AI Automation</h3>
+          <p class="card-excerpt">A deep dive into why human-in-the-loop outsourcing models out-perform automated marketing loops by 3.4x in creative storytelling.</p>
+          <a href="#" class="card-link">Read insight &rarr;</a>
+        </article>
+
+        <article class="think-card">
+          <div class="card-glow"></div>
+          <span class="card-tag">Case Study</span>
+          <h3 class="card-title">Scaling FinTech Advertising in LATAM</h3>
+          <p class="card-excerpt">Discover how Aomotu.INC synchronized campaigns across Mexico and Brazil, achieving 180% growth in customer acquisitions in 6 months.</p>
+          <a href="#" class="card-link">Read insight &rarr;</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Do & Services Section -->
+  <section class="content-section" id="what-we-do">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-heading">What we do</h2>
+      </div>
+      <div class="grid grid-3">
+        <div class="service-box">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" width="36" height="36" stroke="#FFC857" stroke-width="1.5" fill="none">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Digital Advertising</h3>
+          <p>Paid search, programmatic buying, influencer marketing campaigns, and cross-channel optimization targeting maximum ROI across localized digital landscapes.</p>
+        </div>
+
+        <div class="service-box">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" width="36" height="36" stroke="#FFC857" stroke-width="1.5" fill="none">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Marketing Strategy</h3>
+          <p>Holistic brand positioning, market entry evaluation, user acquisition blueprints, and end-to-end data analytics to scale presence across continents.</p>
+        </div>
+
+        <div class="service-box">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" width="36" height="36" stroke="#FFC857" stroke-width="1.5" fill="none">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Outsourcing Services</h3>
+          <p>Global back-office operations, dedicated customer care squads, multilingual content moderation, and design/development support hubs that scale dynamically.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Careers Section -->
+  <section class="content-section bg-darker" id="careers">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2 class="section-heading">Careers</h2>
+      </div>
+      <div class="careers-layout">
+        <div class="careers-intro">
+          <h3>Join the AOMOTU Constellation</h3>
+          <p>We are a remote-first, decentralized network of creatives, engineers, and digital marketers. We prioritize curiosity, autonomy, and cultural synergy.</p>
+          <a href="#" class="btn btn-outline" id="view-all-jobs-btn">View All Open Positions</a>
+        </div>
+        
+        <div class="careers-list">
+          <div class="career-item">
+            <div class="career-summary">
+              <div>
+                <h4 class="career-title">Senior Media Buyer (Programmatic)</h4>
+                <span class="career-meta">Remote &middot; Germany / Europe</span>
+              </div>
+              <span class="plus-icon"></span>
+            </div>
+            <div class="career-detail">
+              <p>We are looking for a programmatic advertising specialist with deep experience in DSPs, real-time bidding, and cross-European campaigns. You will coordinate budgets across 6 primary markets.</p>
+              <button class="btn btn-sm">Apply Now</button>
+            </div>
+          </div>
+
+          <div class="career-item">
+            <div class="career-summary">
+              <div>
+                <h4 class="career-title">Creative Director (Motion Design)</h4>
+                <span class="career-meta">Hybrid &middot; Tokyo, Japan</span>
+              </div>
+              <span class="plus-icon"></span>
+            </div>
+            <div class="career-detail">
+              <p>Lead our APAC creative division. You'll drive rich rich-media, video campaigns, and interactive Web3-focused marketing assets for global clients scaling in Japan & Singapore.</p>
+              <button class="btn btn-sm">Apply Now</button>
+            </div>
+          </div>
+
+          <div class="career-item">
+            <div class="career-summary">
+              <div>
+                <h4 class="career-title">Operations Lead (Outsourcing Hub)</h4>
+                <span class="career-meta">On-site &middot; Manila, Philippines</span>
+              </div>
+              <span class="plus-icon"></span>
+            </div>
+            <div class="career-detail">
+              <p>Manage and scale our fast-growing support and content moderation teams. You will drive operational excellence, client SLAs, and talent development programs.</p>
+              <button class="btn btn-sm">Apply Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Industries Section -->
+  <section class="content-section" id="industries">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2 class="section-heading">Industries</h2>
+      </div>
+      <div class="grid grid-4 industries-grid">
+        <div class="industry-card">
+          <span class="ind-tag">01</span>
+          <h4>FinTech</h4>
+          <p>High-security marketing strategies, user acquisition loops, and regulatory alignment in emerging markets.</p>
+        </div>
+        <div class="industry-card">
+          <span class="ind-tag">02</span>
+          <h4>E-Commerce</h4>
+          <p>Cross-border campaigns, product marketing, shopping feeds, and customer support outsourcing.</p>
+        </div>
+        <div class="industry-card">
+          <span class="ind-tag">03</span>
+          <h4>Gaming & Ent.</h4>
+          <p>Immersive campaigns, creator collaborations, community moderation, and interactive showreels.</p>
+        </div>
+        <div class="industry-card">
+          <span class="ind-tag">04</span>
+          <h4>SaaS & Tech</h4>
+          <p>B2B lead generation, documentation localized translation, developers advocacy, and growth hacking.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Detail List -->
+  <section class="content-section bg-darker" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2 class="section-heading">Services</h2>
+      </div>
+      <div class="services-list-detail">
+        <div class="service-row">
+          <div class="row-num">A.1</div>
+          <div class="row-title">Global Media Buying</div>
+          <div class="row-text">We manage ad budgets across Google, Meta, TikTok, and localized networks (LINE, Kakao, WeChat, Yandex) focusing on performance scaling.</div>
+        </div>
+        <div class="service-row">
+          <div class="row-num">A.2</div>
+          <div class="row-title">Multilingual Creative Studio</div>
+          <div class="row-text">Localized copywriting, video production, graphic design, and UI layouts optimized for specific regional target demographics.</div>
+        </div>
+        <div class="service-row">
+          <div class="row-num">O.1</div>
+          <div class="row-title">24/7 Multilingual Support</div>
+          <div class="row-text">Customer service centers, moderation lines, and tech support staffed by native speakers across Europe, APAC, and LATAM.</div>
+        </div>
+        <div class="service-row">
+          <div class="row-num">O.2</div>
+          <div class="row-title">Bespoke Talent Sourcing</div>
+          <div class="row-text">Recruiting and managing dedicated offshore engineering, marketing operations, and content production teams.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Countries Marquee (Replaced static bottom text) -->
+  <div class="marquee-wrapper">
+    <div class="marquee-track font-space">
+      <span>• LUXEMBOURG</span>
+      <span>• SWEDEN</span>
+      <span>• PHILIPPINES</span>
+      <span>• MEXICO</span>
+      <span>• SAUDI ARABIA</span>
+      <span>• NEW ZEALAND</span>
+      <span>• GERMANY</span>
+      <span>• ITALY</span>
+      <span>• SINGAPORE</span>
+      <span>• CANADA</span>
+      <span>• UAE</span>
+      <span>• JAPAN</span>
+      <span>• UNITED KINGDOM</span>
+      <span>• UNITED STATES</span>
+      <span>• AUSTRALIA</span>
+      <span>• FRANCE</span>
+      
+      <!-- Duplicate for looping -->
+      <span>• LUXEMBOURG</span>
+      <span>• SWEDEN</span>
+      <span>• PHILIPPINES</span>
+      <span>• MEXICO</span>
+      <span>• SAUDI ARABIA</span>
+      <span>• NEW ZEALAND</span>
+      <span>• GERMANY</span>
+      <span>• ITALY</span>
+      <span>• SINGAPORE</span>
+      <span>• CANADA</span>
+      <span>• UAE</span>
+      <span>• JAPAN</span>
+      <span>• UNITED KINGDOM</span>
+      <span>• UNITED STATES</span>
+      <span>• AUSTRALIA</span>
+      <span>• FRANCE</span>
+    </div>
+  </div>
+
+  <!-- Bottom Floating Navigation -->
+  <nav class="floating-nav-bar">
+    <ul class="nav-links">
+      <li><a href="#who-we-are" class="nav-link" data-section="who-we-are"><span class="nav-link-num">01</span>Who we are</a></li>
+      <li><a href="#what-we-think" class="nav-link" data-section="what-we-think"><span class="nav-link-num">02</span>What we think</a></li>
+      <li><a href="#what-we-do" class="nav-link" data-section="what-we-do"><span class="nav-link-num">03</span>What we do</a></li>
+      <li><a href="#careers" class="nav-link" data-section="careers"><span class="nav-link-num">04</span>Careers</a></li>
+      <li><a href="#industries" class="nav-link" data-section="industries"><span class="nav-link-num">05</span>Industries</a></li>
+      <li><a href="#services" class="nav-link" data-section="services"><span class="nav-link-num">06</span>Services</a></li>
+    </ul>
+  </nav>
+
+  <!-- Interactive Showreel Theater Modal -->
+  <div class="modal-overlay" id="showreel-modal">
+    <div class="modal-container showreel-modal-container">
+      <button class="modal-close-btn" id="close-showreel-btn" aria-label="Close Showreel">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+      </button>
+      
+      <div class="canvas-player-container">
+        <!-- Interactive Canvas Background representing AOMOTU digital ad universe -->
+        <canvas id="particle-canvas"></canvas>
+        
+        <!-- Video Controls UI Overlay -->
+        <div class="canvas-controls-overlay">
+          <div class="overlay-header">
+            <h3>AOMOTU // GLOBAL CAMPAIGN SHOWREEL 2026</h3>
+            <span class="live-tag">LIVE SIMULATION</span>
+          </div>
+          
+          <div class="interaction-hint">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Drag or click mouse to interact with the particle advertising nodes
+          </div>
+
+          <div class="overlay-controls">
+            <button class="control-btn" id="player-play-btn" aria-label="Play/Pause">
+              <svg viewBox="0 0 24 24" width="20" height="20" id="play-pause-svg">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="currentColor"/> <!-- Pause shape by default -->
+              </svg>
+            </button>
+            
+            <div class="timeline-container">
+              <span class="time-elapsed" id="time-elapsed">00:00</span>
+              <div class="timeline-slider-bg" id="timeline-slider-bg">
+                <div class="timeline-slider-fill" id="timeline-slider-fill"></div>
+              </div>
+              <span class="time-total">01:48</span>
+            </div>
+
+            <div class="controls-right">
+              <div class="sound-wave-icon" id="sound-wave">
+                <span class="wave-bar bar-1"></span>
+                <span class="wave-bar bar-2"></span>
+                <span class="wave-bar bar-3"></span>
+                <span class="wave-bar bar-4"></span>
+              </div>
+              <button class="control-btn" id="player-fullscreen-btn" aria-label="Toggle Fullscreen">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Form Modal -->
+  <div class="modal-overlay" id="contact-modal">
+    <div class="modal-container contact-modal-container">
+      <button class="modal-close-btn" id="close-contact-btn" aria-label="Close Contact Modal">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+      </button>
+      
+      <div class="contact-box-grid">
+        <div class="contact-info-panel">
+          <h3>Let's build something exceptional.</h3>
+          <p>Get in touch with our global strategy hubs. We respond within 4 hours, across all timezones.</p>
+          
+          <div class="contact-details-list">
+            <div class="detail-item">
+              <span class="detail-icon">✉</span>
+              <div>
+                <h5>Email Us</h5>
+                <p>growth@aomotu.inc</p>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">🌐</span>
+              <div>
+                <h5>Global Hub</h5>
+                <p>Singapore, 018981</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-panel">
+          <form id="contact-form" autocomplete="off">
+            <div class="form-group">
+              <label for="form-name">Your Name</label>
+              <input type="text" id="form-name" required placeholder="Alexander Wright">
+            </div>
+
+            <div class="form-group">
+              <label for="form-email">Business Email</label>
+              <input type="email" id="form-email" required placeholder="alex@company.com">
+            </div>
+
+            <div class="form-group">
+              <label for="form-service">Required Service</label>
+              <div class="select-wrapper">
+                <select id="form-service">
+                  <option value="advertising">Digital Advertising</option>
+                  <option value="marketing">Marketing Strategy</option>
+                  <option value="outsourcing">Outsourcing Services</option>
+                  <option value="other">All of the Above / Partnership</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="form-message">Project Details</label>
+              <textarea id="form-message" rows="4" required placeholder="Tell us about your target markets and goals..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+              Send Message
+              <svg viewBox="0 0 24 24" width="16" height="16">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </form>
+
+          <!-- Success View (Hidden by default) -->
+          <div class="form-success-message" id="contact-success">
+            <div class="success-icon">
+              <svg viewBox="0 0 24 24" width="48" height="48">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#FFC857" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <path d="M22 4L12 14.01l-3-3" stroke="#FFC857" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h4>Thank you!</h4>
+            <p>Your message has reached our global strategy queue. A partner will follow up shortly.</p>
+            <button class="btn btn-outline btn-sm" id="success-close-btn">Close Window</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
