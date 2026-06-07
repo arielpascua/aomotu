@@ -287,14 +287,24 @@ button {
   color: var(--accent-gold);
 }
 
-/* SVG Logo Animations */
-#logo-svg {
-  filter: drop-shadow(0 0 8px rgba(219, 159, 0, 0.25));
+/* 3D Starburst Logo (WebGL canvas) */
+.logo-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#logo-canvas {
+  width: 52px;
+  height: 52px;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(219, 159, 0, 0.25));
   transition: var(--transition-smooth);
 }
-.logo-container:hover #logo-svg {
-  transform: scale(1.05);
-  filter: drop-shadow(0 0 12px rgba(219, 159, 0, 0.45));
+.logo-container:hover #logo-canvas {
+  transform: scale(1.08);
+  filter: drop-shadow(0 3px 14px rgba(219, 159, 0, 0.5));
 }
 
 .orbit-ring-1 {

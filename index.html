@@ -33,29 +33,14 @@
     <!-- Redesigned Animated Logo -->
     <a href="#" class="logo-container">
       <div class="logo-icon">
-        <svg viewBox="0 0 100 100" width="48" height="48" id="logo-svg">
-          <defs>
-            <radialGradient id="gold-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#F5D98A"/>
-              <stop offset="60%" stop-color="#DB9F00"/>
-              <stop offset="100%" stop-color="#985322"/>
-            </radialGradient>
-          </defs>
-          <!-- Outer orbital rings -->
-          <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(219,159,0,0.2)" stroke-width="1.5" stroke-dasharray="10, 5" class="orbit-ring-1"/>
-          <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(219,159,0,0.3)" stroke-width="1" class="orbit-ring-2"/>
-          <!-- Central orb -->
-          <circle cx="50" cy="50" r="8" fill="url(#gold-glow)"/>
-          <!-- Connecting web lines -->
-          <path d="M 50 50 L 25 35 M 50 50 L 75 35 M 50 50 L 50 85 M 50 50 L 30 70 M 50 50 L 70 70 M 50 50 L 50 15" stroke="rgba(219,159,0,0.4)" stroke-width="1" />
-          <!-- Satellites -->
-          <circle cx="25" cy="35" r="3.5" fill="#DB9F00" class="sat sat-1"/>
-          <circle cx="75" cy="35" r="4" fill="#F2EBE6" class="sat sat-2"/>
-          <circle cx="50" cy="85" r="5" fill="#DB9F00" class="sat sat-3"/>
-          <circle cx="30" cy="70" r="3" fill="#F2EBE6" class="sat sat-4"/>
-          <circle cx="70" cy="70" r="4.5" fill="#DB9F00" class="sat sat-5"/>
-          <circle cx="50" cy="15" r="3" fill="#F2EBE6" class="sat sat-6"/>
-        </svg>
+        <!-- 3D metallic starburst logo (WebGL) with SVG fallback -->
+        <canvas id="logo-canvas" width="52" height="52" role="img" aria-label="AOMOTU rotating 3D starburst logo"></canvas>
+        <noscript>
+          <svg viewBox="0 0 100 100" width="48" height="48" id="logo-svg">
+            <circle cx="50" cy="50" r="8" fill="#DB9F00"/>
+            <path d="M 50 50 L 25 35 M 50 50 L 75 35 M 50 50 L 50 85 M 50 50 L 30 70 M 50 50 L 70 70 M 50 50 L 50 15" stroke="#341A0D" stroke-width="2"/>
+          </svg>
+        </noscript>
       </div>
       <div class="logo-text">
         <span class="logo-main">AOMOTU</span><span class="logo-sub">.INC</span>
@@ -566,5 +551,119 @@
 
   <!-- JavaScript -->
   <script src="app.js"></script>
+
+  <!-- 3D Rotating Starburst Logo (Three.js, ES module from CDN) -->
+  <script type="module">
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+    const canvas = document.getElementById('logo-canvas');
+    if (canvas && window.WebGLRenderingContext) {
+      const SIZE = 52;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(SIZE, SIZE, false);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.15;
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+      camera.position.set(0, 0, 5.2);
+
+      // Procedural studio environment so the metal has something glossy to reflect.
+      const envCanvas = document.createElement('canvas');
+      envCanvas.width = 16; envCanvas.height = 64;
+      const ectx = envCanvas.getContext('2d');
+      const grad = ectx.createLinearGradient(0, 0, 0, 64);
+      grad.addColorStop(0.0, '#fff4dd');   // warm key light (top)
+      grad.addColorStop(0.45, '#b7a08f');
+      grad.addColorStop(1.0, '#241208');   // espresso floor (bottom)
+      ectx.fillStyle = grad;
+      ectx.fillRect(0, 0, 16, 64);
+      const envTex = new THREE.CanvasTexture(envCanvas);
+      envTex.mapping = THREE.EquirectangularReflectionMapping;
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      scene.environment = pmrem.fromEquirectangular(envTex).texture;
+      envTex.dispose();
+
+      // Lights for crisp specular highlights on the gold.
+      scene.add(new THREE.HemisphereLight(0xfff1d6, 0x2a160b, 0.55));
+      const key = new THREE.DirectionalLight(0xffffff, 2.4);
+      key.position.set(2.5, 3.5, 2.5);
+      scene.add(key);
+      const rim = new THREE.DirectionalLight(0xffcf7a, 1.1);
+      rim.position.set(-3, -1, -2);
+      scene.add(rim);
+
+      // Palette-matched metals.
+      const goldMat = new THREE.MeshStandardMaterial({ color: 0xDB9F00, metalness: 1.0, roughness: 0.26, envMapIntensity: 1.25 });
+      const darkMat = new THREE.MeshStandardMaterial({ color: 0x2c1a0d, metalness: 0.95, roughness: 0.45, envMapIntensity: 0.85 });
+
+      const burst = new THREE.Group();
+      scene.add(burst);
+
+      // Central gold sphere.
+      const coreR = 0.5;
+      burst.add(new THREE.Mesh(new THREE.SphereGeometry(coreR, 48, 48), goldMat));
+
+      // Radiating spokes on a Fibonacci sphere for an even 3D starburst.
+      const N = 22;
+      const golden = Math.PI * (3 - Math.sqrt(5));
+      const up = new THREE.Vector3(0, 1, 0);
+      const ballGeo = new THREE.SphereGeometry(1, 20, 20);
+      const rodGeo = new THREE.CylinderGeometry(1, 1, 1, 10);
+
+      for (let i = 0; i < N; i++) {
+        const y = 1 - (i / (N - 1)) * 2;
+        const r = Math.sqrt(Math.max(0, 1 - y * y));
+        const theta = i * golden;
+        const dir = new THREE.Vector3(Math.cos(theta) * r, y, Math.sin(theta) * r).normalize();
+
+        const reach = 1.18 + 0.16 * Math.sin(i * 1.7);   // organic spoke length variation
+        const ballR = 0.17 + (i % 3 === 0 ? 0.05 : 0) + (i % 5 === 0 ? 0.03 : 0);
+        const isGold = i % 2 === 0;
+
+        const spike = new THREE.Object3D();
+        spike.quaternion.setFromUnitVectors(up, dir);
+
+        const inner = coreR * 0.85;
+        const len = reach - inner;
+        const rod = new THREE.Mesh(rodGeo, darkMat);
+        rod.scale.set(0.035, len, 0.035);
+        rod.position.y = inner + len / 2;
+        spike.add(rod);
+
+        const ball = new THREE.Mesh(ballGeo, isGold ? goldMat : darkMat);
+        ball.scale.setScalar(ballR);
+        ball.position.y = reach;
+        spike.add(ball);
+
+        burst.add(spike);
+      }
+
+      // Animate: continuous spin with a gentle tilt-wobble. Pause when off-screen/hidden.
+      let running = true;
+      const clock = new THREE.Clock();
+      burst.rotation.x = -0.35;
+
+      function frame() {
+        if (!running) return;
+        const t = clock.getElapsedTime();
+        burst.rotation.y += 0.011;
+        burst.rotation.x = -0.32 + Math.sin(t * 0.6) * 0.12;
+        renderer.render(scene, camera);
+        requestAnimationFrame(frame);
+      }
+      function start() { if (!running) { running = true; clock.start(); frame(); } }
+      function stop() { running = false; }
+
+      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+      const io = new IntersectionObserver((es) => es.forEach(e => e.isIntersecting ? start() : stop()), { threshold: 0 });
+      io.observe(canvas);
+
+      frame();
+    }
+  </script>
 </body>
 </html>
