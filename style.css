@@ -274,9 +274,10 @@ button {
 
 .logo-text {
   font-family: var(--font-outfit);
-  font-size: 26px;
+  font-size: 78px;
   font-weight: 700;
   letter-spacing: 2px;
+  line-height: 1;
 }
 
 .logo-main {
