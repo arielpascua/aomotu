@@ -101,7 +101,7 @@
       <div class="showreel-card" id="showreel-trigger">
         <div class="showreel-header">
           <span class="showreel-title-tag">SHOWREEL &middot; 2026</span>
-          <span class="showreel-duration">01:48</span>
+          <span class="showreel-duration">00:30</span>
         </div>
         <div class="showreel-body">
           <div class="play-button-wrapper">
@@ -417,52 +417,11 @@
       </button>
       
       <div class="canvas-player-container">
-        <!-- Interactive Canvas Background representing AOMOTU digital ad universe -->
-        <canvas id="particle-canvas"></canvas>
-        
-        <!-- Video Controls UI Overlay -->
-        <div class="canvas-controls-overlay">
-          <div class="overlay-header">
-            <h3>AOMOTU // GLOBAL CAMPAIGN SHOWREEL 2026</h3>
-            <span class="live-tag">LIVE SIMULATION</span>
-          </div>
-          
-          <div class="interaction-hint">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Drag or click mouse to interact with the particle advertising nodes
-          </div>
-
-          <div class="overlay-controls">
-            <button class="control-btn" id="player-play-btn" aria-label="Play/Pause">
-              <svg viewBox="0 0 24 24" width="20" height="20" id="play-pause-svg">
-                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="currentColor"/> <!-- Pause shape by default -->
-              </svg>
-            </button>
-            
-            <div class="timeline-container">
-              <span class="time-elapsed" id="time-elapsed">00:00</span>
-              <div class="timeline-slider-bg" id="timeline-slider-bg">
-                <div class="timeline-slider-fill" id="timeline-slider-fill"></div>
-              </div>
-              <span class="time-total">01:48</span>
-            </div>
-
-            <div class="controls-right">
-              <div class="sound-wave-icon" id="sound-wave">
-                <span class="wave-bar bar-1"></span>
-                <span class="wave-bar bar-2"></span>
-                <span class="wave-bar bar-3"></span>
-                <span class="wave-bar bar-4"></span>
-              </div>
-              <button class="control-btn" id="player-fullscreen-btn" aria-label="Toggle Fullscreen">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3" stroke-linecap="round"/>
-                </svg>
-              </button>
-            </div>
-          </div>
+        <!-- Remotion-rendered 30s branded showreel (replaces the old particle placeholder) -->
+        <video id="showreel-video" class="showreel-video" src="showreel.mp4" poster="showreel-poster.jpg" playsinline preload="metadata" controls loop></video>
+        <div class="showreel-brand-tag">
+          <span class="brand-tag-title">AOMOTU // GLOBAL CAMPAIGN SHOWREEL 2026</span>
+          <span class="live-tag">SHOWREEL</span>
         </div>
       </div>
     </div>

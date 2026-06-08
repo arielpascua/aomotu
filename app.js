@@ -509,67 +509,22 @@ class SparkParticle {
   }
 }
 
+// The old particle "LIVE SIMULATION" placeholder was replaced by a real
+// Remotion-rendered showreel video. These two functions keep the existing
+// open/close call sites working by driving the <video> element instead.
 function startShowreelCanvas() {
-  canvasContext = particleCanvas.getContext("2d");
-  
-  // Set dimensions
-  resizeCanvas();
-  window.addEventListener("resize", resizeCanvas);
-  
-  // Populate particles
-  canvasParticles = [];
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    canvasParticles.push(new NodeParticle(particleCanvas.width, particleCanvas.height));
-  }
-
-  // Interactivity
-  particleCanvas.addEventListener("mousemove", handleCanvasMouseMove);
-  particleCanvas.addEventListener("mouseleave", handleCanvasMouseLeave);
-  particleCanvas.addEventListener("mousedown", handleCanvasClick);
-  
-  // Initialize Controls
-  isPlaying = true;
-  updatePlayPauseButton();
-  soundWave.classList.add("playing");
-  
-  // Start simulation loop
-  simulationLoop();
-  
-  // Start Timer (Showreel playback simulation)
-  durationSeconds = 0;
-  updateTimelineUI();
-  if (timerInterval) clearInterval(timerInterval);
-  timerInterval = setInterval(() => {
-    if (isPlaying) {
-      durationSeconds = (durationSeconds + 1) % 109; // Wrap at 1:48 (108 sec)
-      updateTimelineUI();
-    }
-  }, 1000);
-  
-  // Controls listeners
-  playerPlayBtn.addEventListener("click", togglePlayback);
-  soundWave.addEventListener("click", toggleAudioSim);
-  playerFullscreenBtn.addEventListener("click", toggleFullscreen);
-  timelineSliderBg.addEventListener("click", scrubTimeline);
+  const video = document.getElementById("showreel-video");
+  if (!video) return;
+  try { video.currentTime = 0; } catch (e) {}
+  const p = video.play();
+  if (p && typeof p.catch === "function") p.catch(() => {});
 }
 
 function stopShowreelCanvas() {
-  if (animationFrameId) cancelAnimationFrame(animationFrameId);
-  if (timerInterval) clearInterval(timerInterval);
-  window.removeEventListener("resize", resizeCanvas);
-  
-  particleCanvas.removeEventListener("mousemove", handleCanvasMouseMove);
-  particleCanvas.removeEventListener("mouseleave", handleCanvasMouseLeave);
-  particleCanvas.removeEventListener("mousedown", handleCanvasClick);
-  
-  playerPlayBtn.removeEventListener("click", togglePlayback);
-  soundWave.removeEventListener("click", toggleAudioSim);
-  playerFullscreenBtn.removeEventListener("click", toggleFullscreen);
-  timelineSliderBg.removeEventListener("click", scrubTimeline);
-  
-  canvasParticles = [];
-  sparks = [];
-  soundWave.classList.remove("playing");
+  const video = document.getElementById("showreel-video");
+  if (!video) return;
+  video.pause();
+  try { video.currentTime = 0; } catch (e) {}
 }
 
 function resizeCanvas() {

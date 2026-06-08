@@ -1,0 +1,12 @@
+# Local Claude config / memory
+.claude/
+
+# Node dependencies (incl. the Remotion video workspace)
+node_modules/
+
+# Remotion render intermediates (the final showreel.mp4 lives at repo root)
+video/out/
+
+# Safety net: this is a static site — no root Node project should be committed
+/package.json
+/package-lock.json
