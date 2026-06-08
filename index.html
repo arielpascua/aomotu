@@ -570,6 +570,7 @@
       // Palette-matched metals.
       const goldMat = new THREE.MeshStandardMaterial({ color: 0xDB9F00, metalness: 1.0, roughness: 0.26, envMapIntensity: 1.25 });
       const darkMat = new THREE.MeshStandardMaterial({ color: 0x2c1a0d, metalness: 0.95, roughness: 0.45, envMapIntensity: 0.85 });
+      const blackMat = new THREE.MeshStandardMaterial({ color: 0x080808, metalness: 0.9, roughness: 0.32, envMapIntensity: 0.9 });
 
       const burst = new THREE.Group();
       scene.add(burst);
@@ -608,7 +609,7 @@
         rod.position.y = inner + len / 2;
         spike.add(rod);
 
-        const ball = new THREE.Mesh(ballGeo, isGold ? goldMat : darkMat);
+        const ball = new THREE.Mesh(ballGeo, isGold ? goldMat : blackMat);   // balls: 50% gold, 50% black
         ball.scale.setScalar(ballR);
         ball.position.y = reach;
         spike.add(ball);
