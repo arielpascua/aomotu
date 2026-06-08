@@ -1109,6 +1109,13 @@ button {
   margin-bottom: 120px; /* Leave space for floating nav */
 }
 
+/* Hero variant: duplicate marquee between the logo and the showreel card */
+.marquee-hero {
+  margin: 0 0 56px;       /* override the footer's 120px bottom margin */
+  border-radius: 14px;
+  width: 100%;
+}
+
 .marquee-track {
   display: flex;
   width: max-content;
