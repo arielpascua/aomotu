@@ -62,34 +62,9 @@
     <div class="container hero-container">
       <p class="hero-tagline">Digital Advertising &middot; Marketing &middot; Outsourcing Services</p>
       
-      <div class="global-selector-box">
-        <span class="selector-overline">OPERATING ACROSS THE GLOBE</span>
-        
-        <div class="selector-display-wrapper">
-          <button class="arrow-btn prev-btn" id="country-prev" aria-label="Previous Country">
-            <svg viewBox="0 0 24 24" width="24" height="24">
-              <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          
-          <div class="country-showcase">
-            <h1 class="country-name" id="display-country">India</h1>
-            <p class="country-stats" id="display-stats">11 <span class="divider">/</span> 16 markets</p>
-          </div>
-
-          <button class="arrow-btn next-btn" id="country-next" aria-label="Next Country">
-            <svg viewBox="0 0 24 24" width="24" height="24">
-              <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
-
-        <!-- Custom Country Visual Grid Indicator -->
-        <div class="country-dots-grid" id="dots-grid">
-          <!-- Populated by JavaScript -->
-        </div>
-
-        <p class="country-desc" id="display-desc">Connecting global brands to South Asia's digital ecosystem with localized strategies.</p>
+      <!-- 3D Starburst Emblem (fills the former country-carousel area) -->
+      <div class="hero-logo-stage">
+        <canvas id="hero-logo-canvas" width="440" height="440" role="img" aria-label="AOMOTU rotating 3D starburst emblem"></canvas>
       </div>
 
       <!-- Elevated Showreel Card -->
@@ -556,20 +531,16 @@
   <script type="module">
     import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
-    const canvas = document.getElementById('logo-canvas');
-    if (canvas && window.WebGLRenderingContext) {
-      const SIZE = 52;
-
+    function createStarburst(canvas) {
       const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.setSize(SIZE, SIZE, false);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.15;
       renderer.outputColorSpace = THREE.SRGBColorSpace;
 
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-      camera.position.set(0, 0, 5.2);
+      const FOV = 34;
+      const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 100);
 
       // Procedural studio environment so the metal has something glossy to reflect.
       const envCanvas = document.createElement('canvas');
@@ -609,10 +580,13 @@
 
       // Radiating spokes on a Fibonacci sphere for an even 3D starburst.
       const N = 22;
+      const STEM = 1.5;                          // stems 1.5x longer than the original
       const golden = Math.PI * (3 - Math.sqrt(5));
       const up = new THREE.Vector3(0, 1, 0);
       const ballGeo = new THREE.SphereGeometry(1, 20, 20);
       const rodGeo = new THREE.CylinderGeometry(1, 1, 1, 10);
+      const inner = coreR * 0.85;
+      let maxExtent = coreR;
 
       for (let i = 0; i < N; i++) {
         const y = 1 - (i / (N - 1)) * 2;
@@ -620,14 +594,14 @@
         const theta = i * golden;
         const dir = new THREE.Vector3(Math.cos(theta) * r, y, Math.sin(theta) * r).normalize();
 
-        const reach = 1.18 + 0.16 * Math.sin(i * 1.7);   // organic spoke length variation
+        const baseReach = 1.18 + 0.16 * Math.sin(i * 1.7);   // organic spoke variation
+        const reach = inner + (baseReach - inner) * STEM;    // lengthen the stem (ball/core unchanged)
         const ballR = 0.17 + (i % 3 === 0 ? 0.05 : 0) + (i % 5 === 0 ? 0.03 : 0);
         const isGold = i % 2 === 0;
 
         const spike = new THREE.Object3D();
         spike.quaternion.setFromUnitVectors(up, dir);
 
-        const inner = coreR * 0.85;
         const len = reach - inner;
         const rod = new THREE.Mesh(rodGeo, darkMat);
         rod.scale.set(0.035, len, 0.035);
@@ -640,12 +614,28 @@
         spike.add(ball);
 
         burst.add(spike);
+        maxExtent = Math.max(maxExtent, reach + ballR);
       }
 
+      // Auto-frame the camera so the longer-stemmed burst always fits the canvas.
+      const halfFov = (FOV * Math.PI / 180) / 2;
+      camera.position.set(0, 0, (maxExtent / Math.sin(halfFov)) * 1.08);
+      camera.lookAt(0, 0, 0);
+
+      function resize() {
+        const rect = canvas.getBoundingClientRect();
+        const w = Math.max(1, Math.round(rect.width));
+        const h = Math.max(1, Math.round(rect.height));
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
       // Animate: continuous spin with a gentle tilt-wobble. Pause when off-screen/hidden.
-      let running = true;
+      let running = false;
       const clock = new THREE.Clock();
-      burst.rotation.x = -0.35;
 
       function frame() {
         if (!running) return;
@@ -658,11 +648,20 @@
       function start() { if (!running) { running = true; clock.start(); frame(); } }
       function stop() { running = false; }
 
-      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
-      const io = new IntersectionObserver((es) => es.forEach(e => e.isIntersecting ? start() : stop()), { threshold: 0 });
+      document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
+      const io = new IntersectionObserver(
+        (es) => es.forEach(e => (e.isIntersecting && !document.hidden) ? start() : stop()),
+        { threshold: 0 }
+      );
       io.observe(canvas);
+      start();
+    }
 
-      frame();
+    if (window.WebGLRenderingContext) {
+      ['logo-canvas', 'hero-logo-canvas'].forEach((id) => {
+        const c = document.getElementById(id);
+        if (c) createStarburst(c);
+      });
     }
   </script>
 </body>

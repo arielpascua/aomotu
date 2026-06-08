@@ -141,6 +141,9 @@ document.addEventListener("DOMContentLoaded", () => {
    COUNTRY SWITCHER LOGIC
    ========================================================================== */
 function initCountrySwitcher() {
+  // Carousel markup was replaced by the 3D hero logo — skip if absent.
+  if (!dotsGrid || !btnPrev || !btnNext || !displayCountry) return;
+
   // Generate Dots
   countriesData.forEach((_, index) => {
     const dot = document.createElement("button");

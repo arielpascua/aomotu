@@ -372,6 +372,23 @@ button {
   word-spacing: 2px;
 }
 
+/* Hero 3D Logo Stage (replaces the country carousel) */
+.hero-logo-stage {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#hero-logo-canvas {
+  width: min(440px, 80vw);
+  aspect-ratio: 1 / 1;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 12px 44px rgba(219, 159, 0, 0.22));
+}
+
 /* Global Selector Box */
 .global-selector-box {
   width: 100%;
