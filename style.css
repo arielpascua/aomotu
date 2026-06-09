@@ -2,25 +2,26 @@
    DESIGN SYSTEM & VARIABLES
    ========================================================================== */
 :root {
-  --bg-primary: #341A0D;
-  --bg-secondary: #3C3950;
-  --bg-tertiary: #26130A;
-  --text-primary: #F2EBE6;
-  --text-secondary: #9F8981;
-  --text-muted: #6F6058;
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F7FC;
+  --bg-tertiary: #FFFFFF;
+  --text-primary: #0E275D;
+  --text-secondary: #5A6473;
+  --text-muted: #6B7280;
   
-  --accent-gold: #DB9F00;
-  --accent-gold-hover: #985322;
-  --accent-purple: #985322;
-  --accent-blue: #3C3950;
+  --accent-gold: #2563EB;
+  --accent-gold-hover: #1D4ED8;
+  --accent-purple: #0E275D;
+  --accent-blue: #2563EB;
+  --accent-yellow: #FFC909;
   
   --font-space: 'Space Grotesk', sans-serif;
   --font-outfit: 'Outfit', sans-serif;
   --font-inter: 'Inter', sans-serif;
   
-  --glass-bg: rgba(60, 57, 80, 0.65);
-  --glass-border: rgba(159, 137, 129, 0.06);
-  --glass-shadow: 0 20px 50px rgba(52, 26, 13, 0.4);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(14, 39, 93, 0.08);
+  --glass-shadow: 0 20px 50px rgba(14, 39, 93, 0.12);
   
   --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-fast: all 0.2s ease;
@@ -174,9 +175,9 @@ button {
   font-weight: 600;
 }
 .btn-primary:hover {
-  background: #F2EBE6;
+  background: var(--accent-gold-hover);
   color: var(--bg-tertiary);
-  box-shadow: 0 0 25px rgba(219, 159, 0, 0.4);
+  box-shadow: 0 0 25px rgba(37, 99, 235, 0.4);
   transform: translateY(-2px);
 }
 .btn-primary:hover .btn-arrow {
@@ -184,15 +185,15 @@ button {
 }
 
 .btn-outline {
-  border: 1px solid rgba(159, 137, 129, 0.2);
+  border: 1px solid rgba(100, 116, 139, 0.2);
   color: var(--text-primary);
-  background: rgba(159, 137, 129, 0.02);
+  background: rgba(100, 116, 139, 0.02);
   backdrop-filter: blur(10px);
 }
 .btn-outline:hover {
   border-color: var(--accent-gold);
   color: var(--accent-gold);
-  background: rgba(219, 159, 0, 0.05);
+  background: rgba(37, 99, 235, 0.05);
   transform: translateY(-2px);
 }
 
@@ -300,12 +301,12 @@ button {
   width: 52px;
   height: 52px;
   display: block;
-  filter: drop-shadow(0 2px 8px rgba(219, 159, 0, 0.25));
+  filter: drop-shadow(0 2px 8px rgba(37, 99, 235, 0.25));
   transition: var(--transition-smooth);
 }
 .logo-container:hover #logo-canvas {
   transform: scale(1.08);
-  filter: drop-shadow(0 3px 14px rgba(219, 159, 0, 0.5));
+  filter: drop-shadow(0 3px 14px rgba(37, 99, 235, 0.5));
 }
 
 .orbit-ring-1 {
@@ -387,7 +388,7 @@ button {
   aspect-ratio: 1 / 1;
   height: auto;
   display: block;
-  filter: drop-shadow(0 12px 44px rgba(219, 159, 0, 0.22));
+  filter: drop-shadow(0 12px 44px rgba(37, 99, 235, 0.22));
 }
 
 /* Global Selector Box */
@@ -478,8 +479,8 @@ button {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  border: 1px solid rgba(159, 137, 129, 0.08);
-  background: rgba(159, 137, 129, 0.02);
+  border: 1px solid rgba(100, 116, 139, 0.08);
+  background: rgba(100, 116, 139, 0.02);
   color: var(--text-secondary);
   display: flex;
   align-items: center;
@@ -489,8 +490,8 @@ button {
 .arrow-btn:hover {
   border-color: var(--accent-gold);
   color: var(--text-primary);
-  background: rgba(219, 159, 0, 0.08);
-  box-shadow: 0 0 15px rgba(219, 159, 0, 0.15);
+  background: rgba(37, 99, 235, 0.08);
+  box-shadow: 0 0 15px rgba(37, 99, 235, 0.15);
   transform: scale(1.05);
 }
 .arrow-btn:active {
@@ -509,18 +510,18 @@ button {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(159, 137, 129, 0.15);
+  background: rgba(100, 116, 139, 0.15);
   transition: var(--transition-smooth);
   cursor: pointer;
   border: 1px solid transparent;
 }
 .country-dot:hover {
-  background: rgba(219, 159, 0, 0.5);
+  background: rgba(37, 99, 235, 0.5);
 }
 .country-dot.active {
   background: var(--accent-gold);
   transform: scale(1.3);
-  box-shadow: 0 0 10px rgba(219, 159, 0, 0.6);
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
 }
 
 @media (max-width: 576px) {
@@ -539,7 +540,7 @@ button {
 .showreel-card {
   width: 100%;
   max-width: 680px;
-  background: rgba(60, 57, 80, 0.5);
+  background: rgba(245, 247, 252, 0.95);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 24px;
@@ -558,7 +559,7 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(219,159,0,0.05) 0%, rgba(152,83,34,0.05) 100%);
+  background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(14,39,93,0.05) 100%);
   opacity: 0;
   transition: var(--transition-smooth);
   z-index: 0;
@@ -566,8 +567,8 @@ button {
 
 .showreel-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(219, 159, 0, 0.25);
-  box-shadow: 0 25px 60px rgba(52, 26, 13, 0.5), 0 0 30px rgba(219, 159, 0, 0.05);
+  border-color: rgba(37, 99, 235, 0.25);
+  box-shadow: 0 25px 60px rgba(14, 39, 93, 0.5), 0 0 30px rgba(37, 99, 235, 0.05);
 }
 .showreel-card:hover::before {
   opacity: 1;
@@ -612,7 +613,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 25px rgba(219, 159, 0, 0.3);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
   transition: var(--transition-smooth);
   position: relative;
   z-index: 2;
@@ -624,9 +625,9 @@ button {
 }
 
 .showreel-card:hover .play-btn-circle {
-  background: #F2EBE6;
+  background: var(--accent-gold-hover);
   transform: scale(1.08);
-  box-shadow: 0 12px 30px rgba(159, 137, 129, 0.4);
+  box-shadow: 0 12px 30px rgba(100, 116, 139, 0.4);
 }
 
 .play-pulse {
@@ -666,7 +667,7 @@ button {
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent-gold), var(--accent-purple));
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-yellow));
   opacity: 0.3;
 }
 .showreel-card:hover .showreel-footer-strip {
@@ -763,7 +764,7 @@ button {
 /* What We Think - Cards */
 .think-card {
   background: var(--bg-tertiary);
-  border: 1px solid rgba(159, 137, 129, 0.04);
+  border: 1px solid rgba(100, 116, 139, 0.04);
   border-radius: 12px;
   padding: 36px;
   display: flex;
@@ -780,18 +781,18 @@ button {
   right: -100px;
   width: 200px;
   height: 200px;
-  background: radial-gradient(circle, rgba(152,83,34,0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(14,39,93,0.12) 0%, transparent 70%);
   transition: var(--transition-smooth);
   pointer-events: none;
 }
 
 .think-card:hover {
   transform: translateY(-8px);
-  border-color: rgba(159, 137, 129, 0.08);
-  box-shadow: 0 15px 35px rgba(52, 26, 13, 0.4);
+  border-color: rgba(100, 116, 139, 0.08);
+  box-shadow: 0 15px 35px rgba(14, 39, 93, 0.4);
 }
 .think-card:hover .card-glow {
-  background: radial-gradient(circle, rgba(219,159,0,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 70%);
   width: 250px;
   height: 250px;
 }
@@ -844,20 +845,20 @@ button {
 }
 .service-box:hover {
   transform: translateY(-5px);
-  border-color: rgba(219, 159, 0, 0.2);
-  box-shadow: 0 20px 40px rgba(52, 26, 13, 0.3);
+  border-color: rgba(37, 99, 235, 0.2);
+  box-shadow: 0 20px 40px rgba(14, 39, 93, 0.3);
 }
 
 .service-icon {
   width: 64px;
   height: 64px;
-  background: rgba(219, 159, 0, 0.05);
+  background: rgba(37, 99, 235, 0.05);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 28px;
-  border: 1px solid rgba(219, 159, 0, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.1);
   transition: var(--transition-smooth);
 }
 .service-box:hover .service-icon {
@@ -914,17 +915,17 @@ button {
 
 .career-item {
   background: var(--bg-tertiary);
-  border: 1px solid rgba(159, 137, 129, 0.04);
+  border: 1px solid rgba(100, 116, 139, 0.04);
   border-radius: 10px;
   overflow: hidden;
   transition: var(--transition-smooth);
 }
 .career-item:hover {
-  border-color: rgba(159, 137, 129, 0.08);
+  border-color: rgba(100, 116, 139, 0.08);
 }
 .career-item.expanded {
-  border-color: rgba(219, 159, 0, 0.2);
-  box-shadow: 0 10px 30px rgba(52,26,13,0.3);
+  border-color: rgba(37, 99, 235, 0.2);
+  box-shadow: 0 10px 30px rgba(14,39,93,0.3);
 }
 
 .career-summary {
@@ -995,7 +996,7 @@ button {
 .career-item.expanded .career-detail {
   max-height: 240px;
   padding: 20px 24px 24px;
-  border-color: rgba(159, 137, 129, 0.04);
+  border-color: rgba(100, 116, 139, 0.04);
 }
 
 .career-detail p {
@@ -1010,15 +1011,15 @@ button {
 
 .industry-card {
   background: var(--bg-secondary);
-  border: 1px solid rgba(159, 137, 129, 0.03);
+  border: 1px solid rgba(100, 116, 139, 0.03);
   border-radius: 12px;
   padding: 32px;
   transition: var(--transition-smooth);
 }
 .industry-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(219, 159, 0, 0.15);
-  background: rgba(60, 57, 80, 0.8);
+  border-color: rgba(37, 99, 235, 0.15);
+  background: rgba(37, 99, 235, 0.05);
 }
 
 .ind-tag {
@@ -1051,15 +1052,15 @@ button {
   display: grid;
   grid-template-columns: 0.5fr 1.5fr 3fr;
   padding: 32px 0;
-  border-bottom: 1px solid rgba(159, 137, 129, 0.04);
+  border-bottom: 1px solid rgba(100, 116, 139, 0.04);
   align-items: center;
   transition: var(--transition-smooth);
 }
 .service-row:first-child {
-  border-top: 1px solid rgba(159, 137, 129, 0.04);
+  border-top: 1px solid rgba(100, 116, 139, 0.04);
 }
 .service-row:hover {
-  background: rgba(159, 137, 129, 0.01);
+  background: rgba(100, 116, 139, 0.01);
   padding-left: 16px;
   padding-right: 16px;
 }
@@ -1098,9 +1099,9 @@ button {
    INFINITE COUNTRIES MARQUEE (FOOTER)
    ========================================================================== */
 .marquee-wrapper {
-  background: var(--bg-tertiary);
-  border-top: 1px solid rgba(159, 137, 129, 0.04);
-  border-bottom: 1px solid rgba(159, 137, 129, 0.04);
+  background: var(--bg-secondary);
+  border-top: 1px solid rgba(100, 116, 139, 0.04);
+  border-bottom: 1px solid rgba(100, 116, 139, 0.04);
   padding: 32px 0;
   overflow: hidden;
   width: 100%;
@@ -1190,7 +1191,7 @@ button {
 
 .nav-link:hover {
   color: var(--text-primary);
-  background: rgba(159, 137, 129, 0.04);
+  background: rgba(100, 116, 139, 0.04);
 }
 
 .nav-link.active {
@@ -1198,7 +1199,7 @@ button {
   background: var(--accent-gold);
 }
 .nav-link.active .nav-link-num {
-  color: rgba(52, 26, 13, 0.6);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 @media (max-width: 768px) {
@@ -1227,7 +1228,7 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(52, 26, 13, 0.85);
+  background: rgba(14, 39, 93, 0.85);
   backdrop-filter: blur(15px);
   display: flex;
   align-items: center;
@@ -1247,7 +1248,7 @@ button {
   background: var(--bg-secondary);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
-  box-shadow: 0 30px 80px rgba(52, 26, 13, 0.6);
+  box-shadow: 0 30px 80px rgba(14, 39, 93, 0.6);
   position: relative;
   overflow: hidden;
   max-width: 90%;
@@ -1267,8 +1268,8 @@ button {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(159, 137, 129, 0.03);
-  border: 1px solid rgba(159, 137, 129, 0.05);
+  background: rgba(100, 116, 139, 0.03);
+  border: 1px solid rgba(100, 116, 139, 0.05);
   color: var(--text-secondary);
   display: flex;
   align-items: center;
@@ -1295,7 +1296,7 @@ button {
   width: 100%;
   height: 100%;
   position: relative;
-  background: #341A0D;
+  background: #0E275D;
 }
 
 /* Remotion Showreel Video */
@@ -1323,7 +1324,7 @@ button {
 .brand-tag-title {
   font-size: 12px;
   letter-spacing: 1.5px;
-  color: var(--text-primary);
+  color: #FFFFFF;
 }
 
 #particle-canvas {
@@ -1338,7 +1339,7 @@ button {
   left: 0;
   width: 100%;
   padding: 40px 32px 24px;
-  background: linear-gradient(to top, rgba(52, 26, 13, 0.9) 0%, rgba(52, 26, 13, 0.4) 60%, transparent 100%);
+  background: linear-gradient(to top, rgba(14, 39, 93, 0.9) 0%, rgba(14, 39, 93, 0.4) 60%, transparent 100%);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1365,12 +1366,12 @@ button {
 .overlay-header h3 {
   font-size: 14px;
   letter-spacing: 1.5px;
-  color: #F2EBE6;
+  color: #FFFFFF;
 }
 .live-tag {
   font-size: 10px;
-  background: var(--accent-gold);
-  color: var(--bg-tertiary);
+  background: var(--accent-yellow);
+  color: var(--text-primary);
   padding: 2px 8px;
   border-radius: 4px;
   font-weight: 600;
@@ -1391,15 +1392,15 @@ button {
 }
 
 .control-btn {
-  color: #F2EBE6;
+  color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(159, 137, 129, 0.08);
-  border: 1px solid rgba(159, 137, 129, 0.05);
+  background: rgba(100, 116, 139, 0.08);
+  border: 1px solid rgba(100, 116, 139, 0.05);
   transition: var(--transition-fast);
 }
 .control-btn:hover {
@@ -1421,7 +1422,7 @@ button {
 .timeline-slider-bg {
   flex: 1;
   height: 6px;
-  background: rgba(159, 137, 129, 0.15);
+  background: rgba(100, 116, 139, 0.15);
   border-radius: 3px;
   position: relative;
   cursor: pointer;
@@ -1520,7 +1521,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 1px solid rgba(159, 137, 129, 0.03);
+  border-right: 1px solid rgba(100, 116, 139, 0.03);
 }
 
 .contact-info-panel h3 {
@@ -1549,8 +1550,8 @@ button {
 .detail-icon {
   width: 44px;
   height: 44px;
-  background: rgba(159, 137, 129, 0.02);
-  border: 1px solid rgba(159, 137, 129, 0.05);
+  background: rgba(100, 116, 139, 0.02);
+  border: 1px solid rgba(100, 116, 139, 0.05);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1602,8 +1603,8 @@ button {
 .form-group textarea,
 .form-group select {
   width: 100%;
-  background: rgba(159, 137, 129, 0.02);
-  border: 1px solid rgba(159, 137, 129, 0.08);
+  background: rgba(100, 116, 139, 0.02);
+  border: 1px solid rgba(100, 116, 139, 0.08);
   border-radius: 8px;
   padding: 12px 16px;
   color: var(--text-primary);
@@ -1615,15 +1616,15 @@ button {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: rgba(159, 137, 129, 0.2);
+  color: rgba(100, 116, 139, 0.2);
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
   border-color: var(--accent-gold);
-  background: rgba(219, 159, 0, 0.02);
-  box-shadow: 0 0 10px rgba(219, 159, 0, 0.1);
+  background: rgba(37, 99, 235, 0.02);
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.1);
 }
 
 /* Select wrapper styling for custom arrow */
@@ -1674,8 +1675,8 @@ button {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: rgba(219, 159, 0, 0.05);
-  border: 1px solid rgba(219, 159, 0, 0.1);
+  background: rgba(37, 99, 235, 0.05);
+  border: 1px solid rgba(37, 99, 235, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
