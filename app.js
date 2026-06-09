@@ -367,7 +367,7 @@ function initScrollSpy() {
       const targetSection = document.querySelector(targetId);
       
       if (targetSection) {
-        const offset = 40; // Spacing adjustment
+        const offset = 80; // Clear the sticky header
         const top = targetSection.getBoundingClientRect().top + window.pageYOffset - offset;
         window.scrollTo({ top, behavior: "smooth" });
       }

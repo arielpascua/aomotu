@@ -38,6 +38,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
   scrollbar-width: thin;
   scrollbar-color: var(--accent-gold) var(--bg-tertiary);
 }
@@ -217,17 +218,25 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 48px;
-  position: absolute;
+  gap: 24px;
+  padding: 12px 40px;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 100;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 @media (max-width: 768px) {
   .main-header {
-    padding: 20px 24px;
+    padding: 10px 20px;
+  }
+  /* Collapse the inline nav on small screens; logo + CTA remain */
+  .main-header .floating-nav-bar {
+    display: none;
   }
 }
 
@@ -275,9 +284,9 @@ button {
 
 .logo-text {
   font-family: var(--font-outfit);
-  font-size: 78px;
+  font-size: 30px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   line-height: 1;
 }
 
@@ -1107,7 +1116,7 @@ button {
   width: 100%;
   position: relative;
   z-index: 1;
-  margin-bottom: 120px; /* Leave space for floating nav */
+  margin-bottom: 0;
 }
 
 /* Hero variant: duplicate marquee between the logo and the showreel card */
@@ -1142,25 +1151,9 @@ button {
    FLOATING BOTTOM NAVIGATION
    ========================================================================== */
 .floating-nav-bar {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%) translateY(0);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(20px);
-  border-radius: 40px;
-  padding: 8px 12px;
-  z-index: 99;
-  width: max-content;
-  max-width: 90vw;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.floating-nav-bar.hidden {
-  transform: translateX(-50%) translateY(120px);
-  opacity: 0;
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .nav-links {
