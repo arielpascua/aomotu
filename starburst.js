@@ -1,8 +1,8 @@
 /* ==========================================================================
    AOMOTU — 3D starburst emblem
    The company mark from the profile cover, rendered as a slowly rotating
-   metal burst. Recoloured for the cream ground: gold core and alternating
-   gold / near-black nodes on oxblood stems.
+   metal burst. Gold core with alternating gold / near-black nodes on navy stems,
+   matching the mark on the white ground.
 
    Degrades to nothing if WebGL or the CDN is unavailable — the canvas simply
    stays empty and the page is unaffected.
@@ -10,9 +10,9 @@
 
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
-const GOLD = 0xc9a227;
-const OXBLOOD = 0x6b1414;
-const NEAR_BLACK = 0x2a1a16;
+const GOLD = 0xffc909;
+const NAVY = 0x0e275d;
+const NEAR_BLACK = 0x080808;
 
 function createStarburst(canvas) {
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
@@ -25,7 +25,7 @@ function createStarburst(canvas) {
   const FOV = 34;
   const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 100);
 
-  /* Procedural studio environment, warm to match the cream page. */
+  /* Procedural studio environment — warm, so the gold core keeps its lustre. */
   const envCanvas = document.createElement('canvas');
   envCanvas.width = 16;
   envCanvas.height = 64;
@@ -56,7 +56,7 @@ function createStarburst(canvas) {
     envMapIntensity: 1.75, emissive: 0x3a2a00, emissiveIntensity: 0.35,
   });
   const stemMat = new THREE.MeshStandardMaterial({
-    color: OXBLOOD, metalness: 0.9, roughness: 0.42, envMapIntensity: 0.9,
+    color: NAVY, metalness: 0.9, roughness: 0.42, envMapIntensity: 0.9,
   });
   const nodeMat = new THREE.MeshStandardMaterial({
     color: NEAR_BLACK, metalness: 0.88, roughness: 0.34, envMapIntensity: 0.95,

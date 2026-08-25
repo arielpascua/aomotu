@@ -33,7 +33,7 @@ const mark = (cls = 'brand-mark') => `
     <circle cx="37.4" cy="10.6" r="2.2"/><circle cx="37.4" cy="37.4" r="2.2"/>
     <circle cx="10.6" cy="37.4" r="2.2"/><circle cx="10.6" cy="10.6" r="2.2"/>
   </g>
-  <circle cx="24" cy="24" r="5.4" fill="var(--gold)"/>
+  <circle cx="24" cy="24" r="5.4" fill="var(--mark-core, var(--highlight))"/>
 </svg>`;
 
 function header(d, active, root) {
@@ -137,7 +137,7 @@ function layout({ d, title, description, active, body, root = '', extraScripts =
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#6B1414">
+<meta name="theme-color" content="#0E275D">
 <link rel="icon" href="${root}favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -339,7 +339,7 @@ function home(d) {
       <address>${d.contact.addressLines.map((l) => esc(l)).join('<br>')}</address>
       <p><a href="mailto:${esc(d.contact.email)}">${esc(d.contact.email)}</a></p>
       <p><a href="tel:${esc(d.contact.phoneHref)}">${esc(d.contact.phone)}</a></p>
-      <a href="contact.html" class="btn btn-gold">Start a conversation</a>
+      <a href="contact.html" class="btn btn-highlight">Start a conversation</a>
     </div>
   </div>
 </section>`;
@@ -903,7 +903,7 @@ function ctaStrip(d, root) {
       <address>${d.contact.addressLines.map((l) => esc(l)).join('<br>')}</address>
       <p><a href="mailto:${esc(d.contact.email)}">${esc(d.contact.email)}</a></p>
       <p><a href="tel:${esc(d.contact.phoneHref)}">${esc(d.contact.phone)}</a></p>
-      <a href="${root}contact.html" class="btn btn-gold">Speak with the team</a>
+      <a href="${root}contact.html" class="btn btn-highlight">Speak with the team</a>
     </div>
   </div>
 </section>`;
