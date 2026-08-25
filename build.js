@@ -18,7 +18,9 @@ const R = require('./build/render');
 
 const ROOT = __dirname;
 const DATA = path.join(ROOT, 'content', 'aomotu.json');
-const SITE_URL = 'https://aomotu.com';
+/* Canonical origin for sitemap.xml and robots.txt. Change this one line and
+   re-run the build when a custom domain is pointed at the deployment. */
+const SITE_URL = process.env.SITE_URL || 'https://aomotu-web-production.up.railway.app';
 
 const d = JSON.parse(fs.readFileSync(DATA, 'utf8'));
 
