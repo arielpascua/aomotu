@@ -107,6 +107,10 @@ const contactModal = document.getElementById("contact-modal");
 const showreelModal = document.getElementById("showreel-modal");
 const openContactBtn = document.getElementById("open-contact-btn");
 const viewAllJobsBtn = document.getElementById("view-all-jobs-btn");
+const secondaryContactBtns = [
+  document.getElementById("open-services-contact-btn"),
+  document.getElementById("footer-contact-btn")
+];
 const closeContactBtn = document.getElementById("close-contact-btn");
 const successCloseBtn = document.getElementById("success-close-btn");
 const showreelTrigger = document.getElementById("showreel-trigger");
@@ -265,6 +269,15 @@ function initModalListeners() {
       openModal(contactModal);
     });
   }
+
+  // Secondary "speak with the team" entry points (services intro, footer)
+  secondaryContactBtns.forEach(btn => {
+    if (!btn) return;
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      openModal(contactModal);
+    });
+  });
 
   // Close Contact
   closeContactBtn.addEventListener("click", () => closeModal(contactModal));

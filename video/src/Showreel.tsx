@@ -16,6 +16,17 @@ import { loadFont as loadSpace } from "@remotion/google-fonts/SpaceGrotesk";
 const outfit = loadOutfit();
 const space = loadSpace();
 
+/* ------------------------------------------------------------------ timing
+   8 scenes joined by 7 cross-fades. Because a TransitionSeries transition
+   overlaps the two sequences it sits between, the real runtime is
+   SEQ * SCENES - TRANS * (SCENES - 1). Root.tsx imports TOTAL_FRAMES so the
+   composition length can never drift out of sync with the scene list.      */
+export const FPS = 30;
+const SEQ = 185;
+const TRANS = 18;
+const SCENES = 8;
+export const TOTAL_FRAMES = SEQ * SCENES - TRANS * (SCENES - 1); // 1354 ≈ 45.1s
+
 const C = {
   espresso: "#341A0D",
   espressoDeep: "#26130A",
@@ -48,6 +59,26 @@ const fadeUp = (frame: number, start: number, dist = 28, dur = 22) => ({
     easing: ease,
   })}px)`,
 });
+
+const Overline: React.FC<{ frame: number; children: React.ReactNode; mb?: number }> = ({
+  frame,
+  children,
+  mb = 46,
+}) => (
+  <div
+    style={{
+      ...fadeUp(frame, 2),
+      fontFamily: space.fontFamily,
+      fontSize: 22,
+      letterSpacing: 8,
+      color: C.amber,
+      textTransform: "uppercase",
+      marginBottom: mb,
+    }}
+  >
+    {children}
+  </div>
+);
 
 /* ------------------------------------------------------------- background */
 const Background: React.FC = () => {
@@ -118,144 +149,44 @@ const Starburst: React.FC<{ size?: number; spin?: number }> = ({ size = 240, spi
   );
 };
 
-/* ------------------------------------------------------------- scene 1 */
+/* --------------------------------------------------- 01 · intro / identity */
 const SceneIntro: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const pop = spring({ frame, fps, config: { damping: 13, stiffness: 90 } });
   return (
-    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 34 }}>
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 32 }}>
       <div style={{ transform: `scale(${0.4 + pop * 0.6})`, filter: `drop-shadow(0 18px 50px ${C.amber}44)` }}>
         <Starburst size={260} spin={0.9} />
       </div>
       <div style={{ ...fadeUp(frame, 18), fontFamily: outfit.fontFamily, fontWeight: 700, fontSize: 104, letterSpacing: 6, color: C.cream }}>
         AOMOTU<span style={{ color: C.amber }}>.INC</span>
       </div>
-      <div style={{ ...fadeUp(frame, 42), fontFamily: space.fontFamily, fontSize: 25, letterSpacing: 9, color: C.taupe, textTransform: "uppercase" }}>
-        Digital Advertising&nbsp;&nbsp;·&nbsp;&nbsp;Marketing&nbsp;&nbsp;·&nbsp;&nbsp;Outsourcing
+      <div style={{ ...fadeUp(frame, 42), fontFamily: outfit.fontFamily, fontWeight: 300, fontSize: 44, letterSpacing: 2, color: C.amberHi }}>
+        When Tradition Meets Innovation
+      </div>
+      <div style={{ ...fadeUp(frame, 62), fontFamily: space.fontFamily, fontSize: 20, letterSpacing: 6, color: C.taupe, textTransform: "uppercase", marginTop: 4 }}>
+        Advertising · Marketing · Outsourcing · Manufacturing · Printing · Trading
       </div>
     </AbsoluteFill>
   );
 };
 
-/* ------------------------------------------------------------- scene 2 */
-const SceneCountries: React.FC = () => {
-  const frame = useCurrentFrame();
-  const count = Math.round(
-    interpolate(frame, [8, 46], [0, 16], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
-  );
-  return (
-    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
-      <div style={{ ...fadeUp(frame, 4), fontFamily: space.fontFamily, fontSize: 22, letterSpacing: 8, color: C.amber, textTransform: "uppercase", marginBottom: 8 }}>
-        Operating across the globe
-      </div>
-      <div style={{ display: "flex", alignItems: "baseline", gap: 26 }}>
-        <div style={{ fontFamily: outfit.fontFamily, fontWeight: 700, fontSize: 220, lineHeight: 1, color: C.cream, transform: `scale(${interpolate(frame, [0, 30], [0.8, 1], { extrapolateRight: "clamp", easing: ease })})` }}>
-          {count}
-        </div>
-        <div style={{ fontFamily: outfit.fontFamily, fontWeight: 600, fontSize: 52, color: C.taupe, ...fadeUp(frame, 24) }}>
-          countries
-        </div>
-      </div>
-      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "14px 26px", maxWidth: 1200, marginTop: 36 }}>
-        {COUNTRIES.map((name, i) => {
-          const start = 40 + i * 4;
-          return (
-            <span key={name} style={{ ...fadeUp(frame, start, 14, 14), fontFamily: space.fontFamily, fontSize: 22, letterSpacing: 2, color: C.taupe, fontWeight: 500 }}>
-              <span style={{ color: C.amber }}>•</span> {name}
-            </span>
-          );
-        })}
-      </div>
-    </AbsoluteFill>
-  );
-};
+/* ------------------------------------------------ 02 · who we are / network */
+const CHIPS = ["DIGITAL", "OUTSOURCING", "MANUFACTURING", "PRINTING", "GIVEAWAYS", "TRADING"];
 
-/* ------------------------------------------------------------- scene 3 */
-const PILLARS = [
-  { n: "01", title: "Digital Advertising", desc: "Paid, programmatic & influencer campaigns engineered for ROI." },
-  { n: "02", title: "Marketing", desc: "Data-driven strategy with native, localized execution." },
-  { n: "03", title: "Outsourcing", desc: "Hyper-scalable creative & media teams, on demand." },
-];
-const SceneServices: React.FC = () => {
-  const frame = useCurrentFrame();
-  return (
-    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
-      <div style={{ ...fadeUp(frame, 2), fontFamily: space.fontFamily, fontSize: 22, letterSpacing: 8, color: C.amber, textTransform: "uppercase", marginBottom: 50 }}>
-        What we do
-      </div>
-      <div style={{ display: "flex", gap: 40 }}>
-        {PILLARS.map((p, i) => {
-          const start = 14 + i * 16;
-          return (
-            <div
-              key={p.n}
-              style={{
-                ...fadeUp(frame, start, 40),
-                width: 420,
-                padding: "44px 38px",
-                borderRadius: 18,
-                background: `linear-gradient(160deg, ${C.slate}66, ${C.espressoDeep}cc)`,
-                border: `1px solid ${C.taupe}22`,
-              }}
-            >
-              <div style={{ fontFamily: space.fontFamily, fontSize: 18, color: C.amber, letterSpacing: 3, marginBottom: 26 }}>{p.n}</div>
-              <div style={{ fontFamily: outfit.fontFamily, fontWeight: 600, fontSize: 42, color: C.cream, marginBottom: 18, lineHeight: 1.05 }}>{p.title}</div>
-              <div style={{ fontFamily: space.fontFamily, fontSize: 21, color: C.taupe, lineHeight: 1.5 }}>{p.desc}</div>
-            </div>
-          );
-        })}
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-/* ------------------------------------------------------------- scene 4 */
-const STATS = [
-  { value: 16, suffix: "", label: "Global Offices" },
-  { value: 450, suffix: "+", label: "Talents Worldwide" },
-  { value: 98, suffix: "%", label: "Client Retention" },
-];
-const SceneStats: React.FC = () => {
-  const frame = useCurrentFrame();
-  return (
-    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
-      <div style={{ ...fadeUp(frame, 2), fontFamily: space.fontFamily, fontSize: 22, letterSpacing: 8, color: C.amber, textTransform: "uppercase", marginBottom: 56 }}>
-        By the numbers
-      </div>
-      <div style={{ display: "flex", gap: 130 }}>
-        {STATS.map((s, i) => {
-          const start = 12 + i * 12;
-          const v = Math.round(
-            interpolate(frame, [start, start + 40], [0, s.value], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: ease })
-          );
-          return (
-            <div key={s.label} style={{ ...fadeUp(frame, start, 30), textAlign: "center" }}>
-              <div style={{ fontFamily: outfit.fontFamily, fontWeight: 700, fontSize: 130, lineHeight: 1, color: C.amberHi }}>
-                {v}{s.suffix}
-              </div>
-              <div style={{ fontFamily: space.fontFamily, fontSize: 22, letterSpacing: 3, color: C.taupe, textTransform: "uppercase", marginTop: 14 }}>{s.label}</div>
-            </div>
-          );
-        })}
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-/* ------------------------------------------------------------- scene 5 */
-const SceneNetwork: React.FC = () => {
+const SceneWhoWeAre: React.FC = () => {
   const frame = useCurrentFrame();
   const W = 1920, H = 1080;
   const nodes = Array.from({ length: 14 }, (_, i) => ({
-    x: 260 + random(`x${i}`) * (W - 520),
-    y: 300 + random(`y${i}`) * (H - 560),
+    x: 240 + random(`x${i}`) * (W - 480),
+    y: 240 + random(`y${i}`) * (H - 480),
     gold: random(`g${i}`) > 0.55,
     r: 6 + random(`r${i}`) * 8,
   }));
   return (
     <AbsoluteFill>
-      <svg width={W} height={H} style={{ position: "absolute", inset: 0 }}>
+      <svg width={W} height={H} style={{ position: "absolute", inset: 0, opacity: 0.85 }}>
         {nodes.map((a, i) =>
           nodes.slice(i + 1).map((b, j) => {
             const d = Math.hypot(a.x - b.x, a.y - b.y);
@@ -270,36 +201,325 @@ const SceneNetwork: React.FC = () => {
           return <circle key={i} cx={n.x} cy={n.y} r={n.r * s} fill={n.gold ? C.amber : C.cream} opacity={n.gold ? 1 : 0.55} />;
         })}
       </svg>
+
       <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
-        <div style={{ ...fadeUp(frame, 30), fontFamily: outfit.fontFamily, fontWeight: 700, fontSize: 84, color: C.cream, textAlign: "center", lineHeight: 1.1 }}>
-          One borderless team.
+        <Overline frame={frame} mb={34}>Who we are</Overline>
+        <div
+          style={{
+            ...fadeUp(frame, 20, 34),
+            fontFamily: outfit.fontFamily,
+            fontWeight: 600,
+            fontSize: 76,
+            lineHeight: 1.18,
+            color: C.cream,
+            textAlign: "center",
+            maxWidth: 1420,
+            textShadow: `0 8px 40px ${C.espressoDeep}`,
+          }}
+        >
+          Where digital imagination<br />meets real-world outcomes.
         </div>
-        <div style={{ ...fadeUp(frame, 48), fontFamily: space.fontFamily, fontSize: 26, letterSpacing: 4, color: C.amber, marginTop: 18, textTransform: "uppercase" }}>
-          16 markets · native execution
+        <div
+          style={{
+            ...fadeUp(frame, 44, 26),
+            fontFamily: space.fontFamily,
+            fontSize: 26,
+            lineHeight: 1.6,
+            color: C.taupe,
+            textAlign: "center",
+            maxWidth: 1080,
+            marginTop: 28,
+          }}
+        >
+          One multi-service ecosystem bridging digital creativity and physical brand execution.
+        </div>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 14, marginTop: 44, maxWidth: 1300 }}>
+          {CHIPS.map((c, i) => (
+            <span
+              key={c}
+              style={{
+                ...fadeUp(frame, 52 + i * 5, 16, 16),
+                fontFamily: space.fontFamily,
+                fontSize: 19,
+                letterSpacing: 3,
+                color: C.amberHi,
+                padding: "10px 22px",
+                borderRadius: 40,
+                border: `1px solid ${C.amber}55`,
+                background: `${C.espressoDeep}aa`,
+              }}
+            >
+              {c}
+            </span>
+          ))}
         </div>
       </AbsoluteFill>
     </AbsoluteFill>
   );
 };
 
-/* ------------------------------------------------------------- scene 6 */
+/* ------------------------------------------------------- 03 · 16 countries */
+const SceneCountries: React.FC = () => {
+  const frame = useCurrentFrame();
+  const count = Math.round(
+    interpolate(frame, [8, 46], [0, 16], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+  );
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
+      <Overline frame={frame} mb={8}>A borderless one-stop-shop</Overline>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 26 }}>
+        <div style={{ fontFamily: outfit.fontFamily, fontWeight: 700, fontSize: 220, lineHeight: 1, color: C.cream, transform: `scale(${interpolate(frame, [0, 30], [0.8, 1], { extrapolateRight: "clamp", easing: ease })})` }}>
+          {count}
+        </div>
+        <div style={{ fontFamily: outfit.fontFamily, fontWeight: 600, fontSize: 52, color: C.taupe, ...fadeUp(frame, 24) }}>
+          countries
+        </div>
+      </div>
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "16px 28px", maxWidth: 1560, marginTop: 36 }}>
+        {COUNTRIES.map((name, i) => {
+          const start = 30 + i * 3;
+          return (
+            <span key={name} style={{ ...fadeUp(frame, start, 14, 14), fontFamily: space.fontFamily, fontSize: 22, letterSpacing: 2, color: C.taupe, fontWeight: 500 }}>
+              <span style={{ color: C.amber }}>•</span> {name}
+            </span>
+          );
+        })}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+/* --------------------------------------------------- 04 · six divisions */
+const DIVISIONS = [
+  { n: "01", title: "Digital Marketing\n& Advertising", desc: "Social campaigns, SEO/SEM, content creation and brand strategy." },
+  { n: "02", title: "Outsourcing\nServices", desc: "Customer support, back-office, IT & cloud, virtual assistance." },
+  { n: "03", title: "Manufacturing\n& Offset Printing", desc: "Commercial printing, packaging design, large-scale production." },
+  { n: "04", title: "Corporate\nGiveaways", desc: "Promotional items, curated gift sets, event merchandise." },
+  { n: "05", title: "Trading\n& Distribution", desc: "Import/export, logistics, retail partnerships, supply chain." },
+  { n: "06", title: "Creative, Production\n& Events", desc: "Key visuals, TVC and digital ads, activations, PR, talent." },
+];
+
+const SceneDivisions: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
+      <Overline frame={frame} mb={40}>What we do</Overline>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 500px)",
+          gap: 28,
+        }}
+      >
+        {DIVISIONS.map((d, i) => {
+          const start = 12 + i * 9;
+          return (
+            <div
+              key={d.n}
+              style={{
+                ...fadeUp(frame, start, 34),
+                padding: "30px 32px",
+                borderRadius: 18,
+                background: `linear-gradient(160deg, ${C.slate}66, ${C.espressoDeep}cc)`,
+                border: `1px solid ${C.taupe}22`,
+                minHeight: 250,
+              }}
+            >
+              <div style={{ fontFamily: space.fontFamily, fontSize: 17, color: C.amber, letterSpacing: 3, marginBottom: 18 }}>{d.n}</div>
+              <div style={{ fontFamily: outfit.fontFamily, fontWeight: 600, fontSize: 35, color: C.cream, marginBottom: 16, lineHeight: 1.12, whiteSpace: "pre-line" }}>
+                {d.title}
+              </div>
+              <div style={{ fontFamily: space.fontFamily, fontSize: 19, color: C.taupe, lineHeight: 1.5 }}>{d.desc}</div>
+            </div>
+          );
+        })}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+/* ------------------------------------------------------------- 05 · the USP */
+const USP_LINES = [
+  { text: "We make it.", hi: false },
+  { text: "We print it.", hi: false },
+  { text: "We package it.", hi: false },
+  { text: "We exchange it into reality.", hi: true },
+];
+
+const SceneUSP: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
+      <Overline frame={frame} mb={26}>Unique selling point</Overline>
+      <div
+        style={{
+          ...fadeUp(frame, 14, 26),
+          fontFamily: space.fontFamily,
+          fontSize: 27,
+          color: C.taupe,
+          textAlign: "center",
+          maxWidth: 1160,
+          lineHeight: 1.55,
+          marginBottom: 52,
+        }}
+      >
+        We don&rsquo;t simply sell your concept or market your vision.
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+        {USP_LINES.map((l, i) => {
+          const start = 22 + i * 15;
+          return (
+            <div
+              key={l.text}
+              style={{
+                ...fadeUp(frame, start, 30, 18),
+                fontFamily: outfit.fontFamily,
+                fontWeight: l.hi ? 700 : 600,
+                fontSize: l.hi ? 82 : 74,
+                lineHeight: 1.12,
+                color: l.hi ? C.amberHi : C.cream,
+                textShadow: l.hi ? `0 10px 44px ${C.amber}44` : "none",
+              }}
+            >
+              {l.text}
+            </div>
+          );
+        })}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+/* -------------------------------------------------------- 06 · the numbers */
+const STATS = [
+  { value: 16, suffix: "", label: "Countries Served", count: true },
+  { value: 2023, suffix: "", label: "Ecosystem Launched", count: false },
+  { value: 12, suffix: "", label: "Service Divisions", count: true },
+];
+
+const SceneStats: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
+      <Overline frame={frame} mb={56}>By the numbers</Overline>
+      <div style={{ display: "flex", gap: 120 }}>
+        {STATS.map((s, i) => {
+          const start = 12 + i * 12;
+          // A year should never tick up from zero — it fades and settles instead.
+          const shown = s.count
+            ? Math.round(
+                interpolate(frame, [start, start + 40], [0, s.value], {
+                  extrapolateLeft: "clamp",
+                  extrapolateRight: "clamp",
+                  easing: ease,
+                })
+              )
+            : s.value;
+          const settle = s.count
+            ? 1
+            : interpolate(frame, [start, start + 34], [1.14, 1], {
+                extrapolateLeft: "clamp",
+                extrapolateRight: "clamp",
+                easing: ease,
+              });
+          return (
+            <div key={s.label} style={{ ...fadeUp(frame, start, 30), textAlign: "center" }}>
+              <div
+                style={{
+                  fontFamily: outfit.fontFamily,
+                  fontWeight: 700,
+                  fontSize: 130,
+                  lineHeight: 1,
+                  color: C.amberHi,
+                  transform: `scale(${settle})`,
+                }}
+              >
+                {shown}{s.suffix}
+              </div>
+              <div style={{ fontFamily: space.fontFamily, fontSize: 22, letterSpacing: 3, color: C.taupe, textTransform: "uppercase", marginTop: 14 }}>{s.label}</div>
+            </div>
+          );
+        })}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+/* ------------------------------------------------------------ 07 · clients */
+const CLIENTS = [
+  { name: "Product de Jamaica", meta: "Because you deserve the best" },
+  { name: "StatusSymbol", meta: "House of Printing Co." },
+  { name: "The Generals Brand", meta: "Toll Manufacturing" },
+  { name: "Jo Galvez", meta: "Parfum" },
+  { name: "GeBBS", meta: "Healthcare Solutions" },
+  { name: "First Philec", meta: "Energy & Electronics" },
+  { name: "Lionbridge", meta: "Localisation & Language" },
+  { name: "HC Arnoldi", meta: "Gem Lapidaries" },
+  { name: "Schauerte", meta: "Präzisionsdrehtechnik" },
+  { name: "Elevated Play", meta: "Play & Entertainment" },
+  { name: "Villa Pétrusse", meta: "Luxembourg" },
+  { name: "Asia Brewery", meta: "Incorporated" },
+];
+
+const SceneClients: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
+      <Overline frame={frame} mb={40}>Portfolio highlights</Overline>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 396px)", gap: 22 }}>
+        {CLIENTS.map((c, i) => {
+          const start = 10 + i * 5;
+          return (
+            <div
+              key={c.name}
+              style={{
+                ...fadeUp(frame, start, 24, 18),
+                padding: "26px 22px",
+                borderRadius: 14,
+                background: `linear-gradient(160deg, ${C.slate}4d, ${C.espressoDeep}bb)`,
+                border: `1px solid ${C.taupe}1f`,
+                textAlign: "center",
+                minHeight: 116,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                gap: 8,
+              }}
+            >
+              <div style={{ fontFamily: outfit.fontFamily, fontWeight: 600, fontSize: 30, color: C.cream, lineHeight: 1.15 }}>{c.name}</div>
+              <div style={{ fontFamily: space.fontFamily, fontSize: 15, letterSpacing: 2, color: C.taupe, textTransform: "uppercase", lineHeight: 1.4 }}>{c.meta}</div>
+            </div>
+          );
+        })}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+/* -------------------------------------------------------------- 08 · outro */
 const SceneOutro: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const pop = spring({ frame, fps, config: { damping: 14 } });
   return (
-    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 30 }}>
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 26 }}>
       <div style={{ transform: `scale(${0.5 + pop * 0.5})`, filter: `drop-shadow(0 18px 50px ${C.amber}55)` }}>
-        <Starburst size={200} spin={1.1} />
+        <Starburst size={190} spin={1.1} />
       </div>
-      <div style={{ ...fadeUp(frame, 16), fontFamily: outfit.fontFamily, fontWeight: 700, fontSize: 92, letterSpacing: 6, color: C.cream }}>
+      <div style={{ ...fadeUp(frame, 14), fontFamily: outfit.fontFamily, fontWeight: 700, fontSize: 92, letterSpacing: 6, color: C.cream }}>
         AOMOTU<span style={{ color: C.amber }}>.INC</span>
       </div>
-      <div style={{ ...fadeUp(frame, 36), fontFamily: space.fontFamily, fontSize: 24, letterSpacing: 6, color: C.taupe, textTransform: "uppercase" }}>
-        Let's build borderless
+      <div style={{ ...fadeUp(frame, 32), fontFamily: outfit.fontFamily, fontWeight: 300, fontSize: 38, letterSpacing: 2, color: C.amberHi }}>
+        When Tradition Meets Innovation
       </div>
-      <div style={{ ...fadeUp(frame, 52), fontFamily: space.fontFamily, fontSize: 20, letterSpacing: 3, color: C.amber, marginTop: 6 }}>
-        aomotu-web-production.up.railway.app
+
+      <div style={{ ...fadeUp(frame, 48), width: 340, height: 1, background: `${C.taupe}55`, marginTop: 14, marginBottom: 4 }} />
+
+      <div style={{ ...fadeUp(frame, 56), fontFamily: space.fontFamily, fontSize: 26, letterSpacing: 2, color: C.amber }}>
+        acquireinfodesk@aomotu.com&nbsp;&nbsp;·&nbsp;&nbsp;+63 960 656 4910
+      </div>
+      <div style={{ ...fadeUp(frame, 70), fontFamily: space.fontFamily, fontSize: 20, letterSpacing: 2, color: C.taupe, textAlign: "center" }}>
+        Sugi Tower, Kai Garden · M. Vicente St., Malamig · Mandaluyong City, Philippines
       </div>
     </AbsoluteFill>
   );
@@ -314,9 +534,10 @@ const Chrome: React.FC = () => {
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       {/* vignette */}
       <AbsoluteFill style={{ boxShadow: "inset 0 0 240px 80px rgba(10,5,2,0.6)" }} />
-      {/* top label */}
-      <div style={{ position: "absolute", top: 40, left: 56, right: 56, display: "flex", justifyContent: "space-between", alignItems: "center", fontFamily: space.fontFamily }}>
-        <span style={{ fontSize: 18, letterSpacing: 3, color: C.taupe }}>AOMOTU&nbsp;//&nbsp;GLOBAL CAMPAIGN SHOWREEL</span>
+      {/* Top label. Both parts stay left-aligned: when this plays inside the
+          site's showreel modal, a top-right badge lands under the close button. */}
+      <div style={{ position: "absolute", top: 40, left: 56, right: 56, display: "flex", justifyContent: "flex-start", alignItems: "center", gap: 16, fontFamily: space.fontFamily }}>
+        <span style={{ fontSize: 18, letterSpacing: 3, color: C.taupe }}>AOMOTU&nbsp;//&nbsp;COMPANY PROFILE SHOWREEL</span>
         <span style={{ fontSize: 14, letterSpacing: 2, color: C.espressoDeep, background: C.amber, padding: "5px 12px", borderRadius: 5, fontWeight: 600 }}>2026</span>
       </div>
       {/* progress */}
@@ -328,24 +549,35 @@ const Chrome: React.FC = () => {
 };
 
 /* ------------------------------------------------------------- root */
+const SCENE_LIST: React.FC[] = [
+  SceneIntro,
+  SceneWhoWeAre,
+  SceneCountries,
+  SceneDivisions,
+  SceneUSP,
+  SceneStats,
+  SceneClients,
+  SceneOutro,
+];
+
 export const Showreel: React.FC = () => {
-  const seq = 165;
-  const trans = 18;
   return (
     <AbsoluteFill style={{ backgroundColor: C.espresso }}>
       <Background />
       <TransitionSeries>
-        <TransitionSeries.Sequence durationInFrames={seq}><SceneIntro /></TransitionSeries.Sequence>
-        <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: trans })} />
-        <TransitionSeries.Sequence durationInFrames={seq}><SceneCountries /></TransitionSeries.Sequence>
-        <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: trans })} />
-        <TransitionSeries.Sequence durationInFrames={seq}><SceneServices /></TransitionSeries.Sequence>
-        <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: trans })} />
-        <TransitionSeries.Sequence durationInFrames={seq}><SceneStats /></TransitionSeries.Sequence>
-        <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: trans })} />
-        <TransitionSeries.Sequence durationInFrames={seq}><SceneNetwork /></TransitionSeries.Sequence>
-        <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: trans })} />
-        <TransitionSeries.Sequence durationInFrames={seq}><SceneOutro /></TransitionSeries.Sequence>
+        {SCENE_LIST.map((Scene, i) => (
+          <React.Fragment key={i}>
+            {i > 0 && (
+              <TransitionSeries.Transition
+                presentation={fade()}
+                timing={linearTiming({ durationInFrames: TRANS })}
+              />
+            )}
+            <TransitionSeries.Sequence durationInFrames={SEQ}>
+              <Scene />
+            </TransitionSeries.Sequence>
+          </React.Fragment>
+        ))}
       </TransitionSeries>
       <Chrome />
     </AbsoluteFill>
