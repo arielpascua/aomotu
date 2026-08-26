@@ -11,10 +11,71 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Favicon / browser chrome -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="mask-icon" href="favicon.svg" color="#0E275D">
+  <meta name="theme-color" content="#0E275D">
+
+  <!-- Open Graph / social preview.
+       NOTE: absolute URLs point at the last known live host. If the site moves
+       to https://aomotu.com, update og:url, og:image and twitter:image. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AOMOTU.INC">
+  <meta property="og:title" content="AOMOTU.INC | When Tradition Meets Innovation">
+  <meta property="og:description" content="A multi-service ecosystem bridging digital creativity and physical brand execution — advertising, marketing, outsourcing, manufacturing, offset printing, corporate giveaways and trading across 16 countries.">
+  <meta property="og:url" content="https://aomotu-web-production.up.railway.app/">
+  <meta property="og:image" content="https://aomotu-web-production.up.railway.app/images/og-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="AOMOTU.INC — When Tradition Meets Innovation">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AOMOTU.INC | When Tradition Meets Innovation">
+  <meta name="twitter:description" content="One ecosystem for advertising, outsourcing, manufacturing, printing and trading — operating across 16 countries.">
+  <meta name="twitter:image" content="https://aomotu-web-production.up.railway.app/images/og-card.jpg">
+
   <!-- CSS Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- ==========================================================================
+       ICON SPRITE
+       One hidden <symbol> per icon, referenced elsewhere with
+       <svg class="icon"><use href="#i-name"></use></svg>.
+       All are 24x24, stroke-based and inherit colour via currentColor.
+       ========================================================================== -->
+  <svg class="icon-sprite" aria-hidden="true" focusable="false" width="0" height="0">
+    <defs>
+      <symbol id="i-spark" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.5.4.8.9.9 1.5l.1.7h5.2l.1-.7c.1-.6.4-1.1.9-1.5A6 6 0 0 0 12 3z"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.4-2.9 8.3-7 9.5C7.9 19.3 5 15.4 5 11V6l7-3z"/><path d="M9.2 12l2 2 3.6-3.8"/></symbol>
+      <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M4 20c0-8 5-13 16-13 0 9-5 13-11 13H4z"/><path d="M4.5 19.5c3-4.5 6.2-6.8 10.5-8.4"/></symbol>
+      <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16.4 5.7a3.2 3.2 0 0 1 0 6.1"/><path d="M17.8 14.7A6 6 0 0 1 21 20"/></symbol>
+      <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.1"/></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l8.5 4.5L12 12 3.5 7.5 12 3z"/><path d="M3.5 12L12 16.5 20.5 12"/><path d="M3.5 16.5L12 21l8.5-4.5"/></symbol>
+      <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="2.5"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2.5v2M15 2.5v2M9 19.5v2M15 19.5v2M2.5 9h2M2.5 15h2M19.5 9h2M19.5 15h2"/></symbol>
+      <symbol id="i-merge" viewBox="0 0 24 24"><path d="M10.5 13.5a5 5 0 0 0 7.4.4l2.4-2.4a5 5 0 0 0-7-7l-1.4 1.3"/><path d="M13.5 10.5a5 5 0 0 0-7.4-.4L3.7 12.5a5 5 0 0 0 7 7l1.3-1.3"/></symbol>
+      <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M3.5 18a8.5 8.5 0 1 1 17 0"/><path d="M12 18l4.2-5.4"/><circle cx="12" cy="18" r="1.3"/></symbol>
+      <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14.5v-2.2a8 8 0 0 1 16 0v2.2"/><rect x="2.4" y="13.4" width="4" height="6.2" rx="1.7"/><rect x="17.6" y="13.4" width="4" height="6.2" rx="1.7"/><path d="M19.6 19.6v.6a2.8 2.8 0 0 1-2.8 2.8H13.4"/></symbol>
+      <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3.2 12h17.6"/><path d="M12 3a14.5 14.5 0 0 1 0 18 14.5 14.5 0 0 1 0-18z"/></symbol>
+      <symbol id="i-segments" viewBox="0 0 24 24"><path d="M21.2 15.9A10 10 0 1 1 8 2.8"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></symbol>
+      <symbol id="i-gem" viewBox="0 0 24 24"><path d="M6.2 3.5h11.6l3 5.6L12 20.8 2.4 9.1l3.8-5.6z"/><path d="M2.6 9.1h18.8"/><path d="M9 3.5l3 5.6 3-5.6M12 9.1v11.5"/></symbol>
+      <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5.2" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="18.8" r="2.6"/><path d="M8.3 10.7l7.4-4.2M8.3 13.3l7.4 4.2"/></symbol>
+      <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.6 8.5a4.2 4.2 0 0 0-7.1-2.3L12 7.7l-1.5-1.5A4.2 4.2 0 0 0 3.4 8.5c0 3.7 5.3 7.4 8.6 9.9 3.3-2.5 8.6-6.2 8.6-9.9z"/></symbol>
+      <symbol id="i-revenue" viewBox="0 0 24 24"><path d="M2.5 20.5h19"/><path d="M5.5 20.5v-6M10.5 20.5V8M15.5 20.5v-9M20.5 20.5V4.5"/></symbol>
+      <symbol id="i-boxes" viewBox="0 0 24 24"><rect x="3" y="3" width="7.6" height="7.6" rx="1.6"/><rect x="13.4" y="3" width="7.6" height="7.6" rx="1.6"/><rect x="3" y="13.4" width="7.6" height="7.6" rx="1.6"/><rect x="13.4" y="13.4" width="7.6" height="7.6" rx="1.6"/></symbol>
+      <symbol id="i-activity" viewBox="0 0 24 24"><path d="M2.5 12h4l3-7.5 5.5 15 2.5-7.5h4"/></symbol>
+      <symbol id="i-partners" viewBox="0 0 24 24"><circle cx="8.8" cy="12" r="5.8"/><circle cx="15.2" cy="12" r="5.8"/></symbol>
+      <symbol id="i-megaphone" viewBox="0 0 24 24"><path d="M3 10.5v3a1 1 0 0 0 1 1h2.2l6.3 4V5.5l-6.3 4H4a1 1 0 0 0-1 1z"/><path d="M6.2 14.5v3.8a1.5 1.5 0 0 0 3 0v-3"/><path d="M16.5 9.2a4 4 0 0 1 0 5.6"/><path d="M19 6.6a7.6 7.6 0 0 1 0 10.8"/></symbol>
+      <symbol id="i-printer" viewBox="0 0 24 24"><path d="M7 9.5v-6h10v6"/><rect x="3" y="9.5" width="18" height="8" rx="2"/><path d="M7 14.5h10v6H7z"/><path d="M17.5 12.8h.01"/></symbol>
+      <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="9.5" width="18" height="11.5" rx="1.6"/><path d="M2 9.5h20M12 9.5V21"/><path d="M12 9.5S10.6 4.5 8.2 4.5a2.5 2.5 0 0 0 0 5"/><path d="M12 9.5s1.4-5 3.8-5a2.5 2.5 0 0 1 0 5"/></symbol>
+      <symbol id="i-truck" viewBox="0 0 24 24"><path d="M1.5 4.5h13.5v11H1.5z"/><path d="M15 8.5h4l3.5 3.5v3.5H15z"/><circle cx="6" cy="18.5" r="2.4"/><circle cx="18" cy="18.5" r="2.4"/></symbol>
+      <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.8 8.2l-2.1 5.5-5.5 2.1 2.1-5.5 5.5-2.1z"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.5s7-5.9 7-11.2a7 7 0 1 0-14 0c0 5.3 7 11.2 7 11.2z"/><circle cx="12" cy="10.2" r="2.6"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.2"/><path d="M3.6 6.6L12 12.8l8.4-6.2"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3h2.9l1.5 3.9-2 1.4a12.4 12.4 0 0 0 5.7 5.7l1.4-2L20 13.5v2.9a2 2 0 0 1-2.2 2A16.6 16.6 0 0 1 3.6 5.2 2 2 0 0 1 5.6 3z"/></symbol>
+      <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21.5V3"/><path d="M5 3.8h11.6l-2.2 3.8 2.2 3.8H5"/></symbol>
+    </defs>
+  </svg>
 
   <!-- Background Gradients and Orbs -->
   <div class="glow-orb orb-1"></div>
@@ -55,6 +116,10 @@
 
   <!-- Hero Section -->
   <section class="hero-section" id="hero">
+    <!-- Decorative abstract backdrop; purely atmospheric, carries no meaning. -->
+    <div class="hero-backdrop" aria-hidden="true">
+      <img src="images/hero-atmosphere.webp" alt="" width="2000" height="1100" decoding="async" fetchpriority="high">
+    </div>
     <div class="container hero-container">
       <span class="status-indicator" style="margin-bottom: 20px;">
         <span class="pulse-dot"></span>
@@ -148,14 +213,17 @@
           <p>Our backbone structure consists of robust manufacturing, offset printing, technology and trade activities. Through this integrated approach, we create end-to-end solutions that carry businesses from concept to customer seamlessly — combining digital advertising, marketing strategy, outsourcing operations, manufacturing, offset printing, corporate giveaways and trading under one unified ecosystem.</p>
           <div class="stats-row">
             <div class="stat-item">
+              <svg class="icon stat-icon" aria-hidden="true"><use href="#i-globe"></use></svg>
               <span class="stat-number">16</span>
               <span class="stat-label">Countries Served</span>
             </div>
             <div class="stat-item">
+              <svg class="icon stat-icon" aria-hidden="true"><use href="#i-flag"></use></svg>
               <span class="stat-number">2023</span>
               <span class="stat-label">Ecosystem Launched</span>
             </div>
             <div class="stat-item">
+              <svg class="icon stat-icon" aria-hidden="true"><use href="#i-boxes"></use></svg>
               <span class="stat-number">12</span>
               <span class="stat-label">Service Divisions</span>
             </div>
@@ -200,6 +268,12 @@
         <span class="section-num">02</span>
         <h2 class="section-heading">Our story</h2>
       </div>
+
+      <!-- Decorative band: an ink wash meeting technical draughting.
+           Purely atmospheric — it depicts nothing the company sells. -->
+      <figure class="story-banner" aria-hidden="true">
+        <img src="images/story-texture.webp" alt="" width="1200" height="1500" loading="lazy" decoding="async">
+      </figure>
 
       <div class="story-layout">
         <!-- Welcome message from the founder -->
@@ -259,37 +333,58 @@
       </div>
       <div class="grid grid-4 industries-grid">
         <div class="industry-card">
-          <span class="ind-tag">01</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-spark"></use></svg></span>
+            <span class="ind-tag">01</span>
+          </div>
           <h4>Innovation &amp; Creativity</h4>
           <p>We continuously explore new ideas, digital strategies, and product innovations to keep brands relevant and competitive.</p>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">02</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg></span>
+            <span class="ind-tag">02</span>
+          </div>
           <h4>Integrity &amp; Transparency</h4>
           <p>We uphold ethical practices in advertising, manufacturing, and trading, ensuring honesty and trust in every partnership.</p>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">03</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-leaf"></use></svg></span>
+            <span class="ind-tag">03</span>
+          </div>
           <h4>Sustainability &amp; Wellness</h4>
           <p>We commit to producing and promoting products that enhance consumer well-being while respecting environmental responsibility.</p>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">04</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-users"></use></svg></span>
+            <span class="ind-tag">04</span>
+          </div>
           <h4>Collaboration &amp; Empowerment</h4>
           <p>We believe in teamwork — empowering clients, partners, and employees to co-create impactful solutions.</p>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">05</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-target"></use></svg></span>
+            <span class="ind-tag">05</span>
+          </div>
           <h4>Excellence &amp; Results</h4>
           <p>We strive for measurable outcomes, delivering campaigns and products that achieve growth and long-term success.</p>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">06</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-layers"></use></svg></span>
+            <span class="ind-tag">06</span>
+          </div>
           <h4>Adaptability &amp; Scalability</h4>
           <p>We design systems and strategies that evolve with market demands, ensuring brands can expand seamlessly across industries.</p>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">07</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-cpu"></use></svg></span>
+            <span class="ind-tag">07</span>
+          </div>
           <h4>Practical Tech Solutions</h4>
           <p>We integrate technology into operations and marketing to streamline processes, enhance efficiency, and maximise impact.</p>
         </div>
@@ -378,22 +473,34 @@
       <p class="usp-statement">We don't simply sell your concept or market your vision. We make it. We print it. We package it. We exchange it into reality.</p>
       <div class="grid grid-4 industries-grid">
         <div class="industry-card">
-          <span class="ind-tag">USP 01</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-merge"></use></svg></span>
+            <span class="ind-tag">USP 01</span>
+          </div>
           <h4>Digital + Physical Integration</h4>
           <p>Seamlessly merging state-of-the-art advertising and outsourcing with offset printing, corporate gifts and manufacturing services.</p>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">USP 02</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-gauge"></use></svg></span>
+            <span class="ind-tag">USP 02</span>
+          </div>
           <h4>Efficiency from Start to Finish</h4>
           <p>From strategy to execution, we run campaigns that live online and offline — saving time and guaranteeing brand consistency from concept to execution.</p>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">USP 03</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-headset"></use></svg></span>
+            <span class="ind-tag">USP 03</span>
+          </div>
           <h4>Scalable Outsourcing</h4>
           <p>Flexible customer service, back-office and IT assistance, enabling businesses to focus on what they do best.</p>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">USP 04</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg></span>
+            <span class="ind-tag">USP 04</span>
+          </div>
           <h4>Local Strength, Global Reach</h4>
           <p>Headquartered in the Philippines, serving a wide range of sectors and diverse industries throughout the world with scalable solutions.</p>
         </div>
@@ -410,7 +517,10 @@
       </div>
       <div class="grid grid-4 industries-grid">
         <div class="industry-card">
-          <span class="ind-tag">01</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-segments"></use></svg></span>
+            <span class="ind-tag">01</span>
+          </div>
           <h4>Customer Segments</h4>
           <ul class="card-list">
             <li>Retail &amp; e-commerce brands needing digital campaigns and packaging.</li>
@@ -421,7 +531,10 @@
           </ul>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">02</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-gem"></use></svg></span>
+            <span class="ind-tag">02</span>
+          </div>
           <h4>Value Proposition</h4>
           <ul class="card-list">
             <li>End-to-end integration: digital + outsourcing + manufacturing + trading under one roof.</li>
@@ -431,7 +544,10 @@
           </ul>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">03</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-share"></use></svg></span>
+            <span class="ind-tag">03</span>
+          </div>
           <h4>Channels</h4>
           <ul class="card-list">
             <li>Direct sales through corporate partnerships.</li>
@@ -441,7 +557,10 @@
           </ul>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">04</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-heart"></use></svg></span>
+            <span class="ind-tag">04</span>
+          </div>
           <h4>Customer Relationships</h4>
           <ul class="card-list">
             <li>Long-term contracts with corporate clients.</li>
@@ -451,7 +570,10 @@
           </ul>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">05</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-revenue"></use></svg></span>
+            <span class="ind-tag">05</span>
+          </div>
           <h4>Revenue Streams</h4>
           <ul class="card-list">
             <li>Digital advertising retainers and campaign fees.</li>
@@ -462,7 +584,10 @@
           </ul>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">06</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-boxes"></use></svg></span>
+            <span class="ind-tag">06</span>
+          </div>
           <h4>Key Resources</h4>
           <ul class="card-list">
             <li>Skilled creative and marketing teams.</li>
@@ -473,7 +598,10 @@
           </ul>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">07</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-activity"></use></svg></span>
+            <span class="ind-tag">07</span>
+          </div>
           <h4>Key Activities</h4>
           <ul class="card-list">
             <li>Designing and executing digital campaigns.</li>
@@ -484,7 +612,10 @@
           </ul>
         </div>
         <div class="industry-card">
-          <span class="ind-tag">08</span>
+          <div class="ind-head">
+            <span class="card-icon"><svg class="icon" aria-hidden="true"><use href="#i-partners"></use></svg></span>
+            <span class="ind-tag">08</span>
+          </div>
           <h4>Key Partnerships</h4>
           <ul class="card-list">
             <li>Social media and ad-tech platforms.</li>
@@ -1029,32 +1160,32 @@
       </div>
       <div class="services-list-detail">
         <div class="service-row">
-          <div class="row-num">01</div>
+          <div class="row-num"><svg class="icon" aria-hidden="true"><use href="#i-megaphone"></use></svg><span>01</span></div>
           <div class="row-title">Digital Advertising &amp; Marketing Alliances</div>
           <div class="row-text">Tech platforms — partnerships with social media networks (Meta, TikTok, LinkedIn) and ad-tech providers for advanced targeting and analytics. Creative agencies — collaborations with design studios and content creators to expand creative capabilities. Data &amp; AI firms — integration with AI-driven personalisation and customer insights platforms.</div>
         </div>
         <div class="service-row">
-          <div class="row-num">02</div>
+          <div class="row-num"><svg class="icon" aria-hidden="true"><use href="#i-headset"></use></svg><span>02</span></div>
           <div class="row-title">Outsourcing &amp; Business Process</div>
           <div class="row-text">BPO providers — joint ventures with customer service and back-office outsourcing firms to scale operations. IT &amp; cloud partners — collaboration with cloud computing providers (Microsoft 365, Google Cloud) for secure, scalable infrastructure. Talent networks — recruitment agency partnerships ensuring a steady pipeline of skilled professionals.</div>
         </div>
         <div class="service-row">
-          <div class="row-num">03</div>
+          <div class="row-num"><svg class="icon" aria-hidden="true"><use href="#i-printer"></use></svg><span>03</span></div>
           <div class="row-title">Manufacturing &amp; Printing</div>
           <div class="row-text">Offset printing houses — strategic alliances with regional printers for cost-efficient, high-volume production. Packaging innovators — collaboration with eco-friendly packaging manufacturers to meet sustainability goals. Suppliers &amp; logistics firms — partnerships with raw material suppliers and logistics companies to ensure reliability and speed.</div>
         </div>
         <div class="service-row">
-          <div class="row-num">04</div>
+          <div class="row-num"><svg class="icon" aria-hidden="true"><use href="#i-gift"></use></svg><span>04</span></div>
           <div class="row-title">Corporate Giveaways &amp; Merchandising</div>
           <div class="row-text">Promotional product suppliers — partnerships with global merchandise suppliers for diverse, customisable giveaways. Local artisans &amp; SMEs — collaboration with small businesses to produce unique, culturally resonant corporate gifts. Event organisers — partnerships with trade shows, expos and corporate event planners to integrate giveaways into brand activations.</div>
         </div>
         <div class="service-row">
-          <div class="row-num">05</div>
+          <div class="row-num"><svg class="icon" aria-hidden="true"><use href="#i-truck"></use></svg><span>05</span></div>
           <div class="row-title">Trading &amp; Distribution</div>
           <div class="row-text">Import/export networks — alliances with international trading firms to expand product sourcing and distribution. Retail &amp; e-commerce platforms — partnerships with online marketplaces (Shopee, Lazada, Amazon) for wider reach. Supply chain partners — collaboration with logistics and warehousing providers to optimise delivery and inventory management.</div>
         </div>
         <div class="service-row">
-          <div class="row-num">06</div>
+          <div class="row-num"><svg class="icon" aria-hidden="true"><use href="#i-compass"></use></svg><span>06</span></div>
           <div class="row-title">Strategic Vision Alignment</div>
           <div class="row-text">Sustainability partners — work with eco-certification bodies and NGOs to reinforce green initiatives. Innovation hubs — collaboration with universities and R&amp;D centres for continuous innovation in advertising and manufacturing. Government &amp; industry associations — partnerships with chambers of commerce and trade associations to strengthen credibility and influence.</div>
         </div>
@@ -1102,6 +1233,29 @@
     </div>
   </div>
 
+  <!-- Closing CTA -->
+  <section class="cta-band">
+    <!-- Decorative backdrop; carries no meaning. -->
+    <img class="cta-band-bg" src="images/cta-band.webp" alt="" width="2000" height="800" loading="lazy" decoding="async" aria-hidden="true">
+    <div class="container cta-band-inner">
+      <span class="cta-eyebrow"><span class="pulse-dot"></span>Start a project</span>
+      <h2 class="cta-title">One brief. Six divisions.<br>Sixteen countries.</h2>
+      <p class="cta-sub">Tell us where you want the brand to land. Strategy, campaign, production run and shipping all come back through a single point of contact.</p>
+      <div class="cta-actions">
+        <button class="btn btn-primary" id="cta-contact-btn">
+          Speak with the team
+          <svg class="btn-arrow" viewBox="0 0 24 24" width="16" height="16">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <a class="cta-mail" href="mailto:acquireinfodesk@aomotu.com">
+          <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
+          acquireinfodesk@aomotu.com
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- Contact Footer -->
   <footer class="site-footer">
     <div class="container footer-grid">
@@ -1114,13 +1268,20 @@
 
       <div class="footer-col">
         <h5>Head Office</h5>
-        <p>Sugi Tower, Kai Garden<br>M. Vicente St., Malamig<br>Mandaluyong City, Philippines</p>
+        <p class="footer-line">
+          <svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg>
+          <span>Sugi Tower, Kai Garden<br>M. Vicente St., Malamig<br>Mandaluyong City, Philippines</span>
+        </p>
       </div>
 
       <div class="footer-col">
         <h5>Get in touch</h5>
-        <p>
-          <a href="mailto:acquireinfodesk@aomotu.com">acquireinfodesk@aomotu.com</a><br>
+        <p class="footer-line">
+          <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
+          <a href="mailto:acquireinfodesk@aomotu.com">acquireinfodesk@aomotu.com</a>
+        </p>
+        <p class="footer-line">
+          <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
           <a href="tel:+639606564910">+63 960 656 4910</a>
         </p>
       </div>

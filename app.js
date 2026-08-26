@@ -109,7 +109,8 @@ const openContactBtn = document.getElementById("open-contact-btn");
 const viewAllJobsBtn = document.getElementById("view-all-jobs-btn");
 const secondaryContactBtns = [
   document.getElementById("open-services-contact-btn"),
-  document.getElementById("footer-contact-btn")
+  document.getElementById("footer-contact-btn"),
+  document.getElementById("cta-contact-btn")
 ];
 const closeContactBtn = document.getElementById("close-contact-btn");
 const successCloseBtn = document.getElementById("success-close-btn");

@@ -1060,6 +1060,8 @@ button {
 .service-row {
   display: grid;
   grid-template-columns: 0.5fr 1.5fr 3fr;
+  /* Long titles ran straight into the body column without this. */
+  column-gap: 32px;
   padding: 32px 0;
   border-bottom: 1px solid rgba(100, 116, 139, 0.04);
   align-items: center;
@@ -2266,4 +2268,288 @@ button {
   .main-header .btn-primary .btn-arrow {
     display: none;
   }
+}
+
+/* ==========================================================================
+   ICON SYSTEM
+   Symbols live in the sprite at the top of index.html and are pulled in with
+   <svg class="icon"><use href="#i-name"></use></svg>. Geometry comes from the
+   symbol; colour and weight are inherited from here, so any icon takes on the
+   colour of whatever it sits inside.
+   ========================================================================== */
+.icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ==========================================================================
+   HERO BACKDROP
+   Decorative abstract wash behind the hero. The overlay keeps the middle of
+   the stage white so the emblem and copy never lose contrast.
+   ========================================================================== */
+.hero-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-backdrop img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -48%);
+  width: 128%;
+  min-width: 1150px;
+  height: auto;
+  opacity: 0.55;
+  /* Dissolve the image's own edges so it reads as atmosphere rather than a
+     pasted rectangle. Masking the element beats overlaying a scrim, which
+     would paint its own visible box. */
+  -webkit-mask-image: radial-gradient(ellipse 46% 48% at 50% 50%,
+    #000 0%, rgba(0, 0, 0, 0.82) 40%, transparent 73%);
+  mask-image: radial-gradient(ellipse 46% 48% at 50% 50%,
+    #000 0%, rgba(0, 0, 0, 0.82) 40%, transparent 73%);
+}
+
+/* Blend the bottom of the hero into the section that follows. */
+.hero-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.72) 62%,
+    var(--bg-primary) 88%);
+}
+
+/* Keep the hero content stacked above the wash. */
+.hero-container {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .hero-backdrop img {
+    width: 210%;
+    min-width: 0;
+    opacity: 0.4;
+  }
+}
+
+/* ==========================================================================
+   CARD ICON HEADER (core values, USP, business model)
+   ========================================================================== */
+.ind-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.ind-head .ind-tag {
+  margin-bottom: 0;
+}
+
+.card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(37, 99, 235, 0.07);
+  border: 1px solid rgba(37, 99, 235, 0.14);
+  color: var(--accent-blue);
+  transition: var(--transition-smooth);
+}
+.card-icon .icon {
+  width: 21px;
+  height: 21px;
+}
+.industry-card:hover .card-icon {
+  background: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: var(--bg-tertiary);
+  transform: scale(1.06);
+}
+
+/* ==========================================================================
+   STAT + SERVICE ROW ICONS
+   ========================================================================== */
+.stat-icon {
+  align-self: flex-start;
+  width: 18px;
+  height: 18px;
+  color: var(--accent-blue);
+  opacity: 0.75;
+  margin-bottom: 10px;
+}
+
+.row-num {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.row-num .icon {
+  width: 22px;
+  height: 22px;
+  color: var(--accent-blue);
+  transition: var(--transition-smooth);
+}
+.service-row:hover .row-num .icon {
+  color: var(--accent-purple);
+  transform: translateX(2px);
+}
+
+/* ==========================================================================
+   OUR STORY — DECORATIVE BAND
+   ========================================================================== */
+.story-banner {
+  margin: 0 0 56px;
+  height: 240px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-primary);
+}
+.story-banner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 45%;
+}
+
+@media (max-width: 768px) {
+  .story-banner {
+    height: 160px;
+    margin-bottom: 36px;
+  }
+}
+
+/* ==========================================================================
+   CLOSING CTA BAND
+   ========================================================================== */
+.cta-band {
+  position: relative;
+  overflow: hidden;
+  background: #071430;
+  padding: 104px 0;
+  z-index: 1;
+}
+
+.cta-band-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+.cta-band-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  text-align: center;
+}
+
+.cta-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-space);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent-yellow);
+  margin-bottom: 22px;
+}
+.cta-eyebrow .pulse-dot,
+.cta-eyebrow .pulse-dot::after {
+  background-color: var(--accent-yellow);
+}
+
+.cta-title {
+  font-family: var(--font-outfit);
+  font-size: 44px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
+
+.cta-sub {
+  font-size: 17px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0 auto 36px;
+  max-width: 620px;
+}
+
+.cta-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.cta-mail {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-space);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.78);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  padding-bottom: 3px;
+}
+.cta-mail:hover {
+  color: #FFFFFF;
+  border-bottom-color: var(--accent-yellow);
+}
+.cta-mail .icon {
+  width: 17px;
+  height: 17px;
+}
+
+@media (max-width: 768px) {
+  .cta-band { padding: 72px 0; }
+  .cta-title { font-size: 32px; }
+  .cta-sub { font-size: 15px; }
+  .cta-actions { gap: 20px; }
+}
+
+/* ==========================================================================
+   FOOTER CONTACT LINES
+   ========================================================================== */
+.footer-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+.footer-line .icon {
+  width: 17px;
+  height: 17px;
+  color: var(--accent-blue);
+  margin-top: 5px;
 }
