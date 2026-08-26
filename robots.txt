@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://aomotu-web-production.up.railway.app/sitemap.xml

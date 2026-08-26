@@ -10,8 +10,3 @@ video/out/
 # Safety net: this is a static site — no root Node project should be committed
 /package.json
 /package-lock.json
-
-# Local verification artifacts
-.playwright-mcp/
-*.png
-!showreel-poster.jpg
