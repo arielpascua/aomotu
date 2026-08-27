@@ -121,20 +121,12 @@ const closeShowreelBtn = document.getElementById("close-showreel-btn");
 const contactForm = document.getElementById("contact-form");
 const contactSuccess = document.getElementById("contact-success");
 
-// Showreel Player Controls
-const particleCanvas = document.getElementById("particle-canvas");
-const playerPlayBtn = document.getElementById("player-play-btn");
-const playPauseSvg = document.getElementById("play-pause-svg");
-const timeElapsedDisplay = document.getElementById("time-elapsed");
-const timelineSliderBg = document.getElementById("timeline-slider-bg");
-const timelineSliderFill = document.getElementById("timeline-slider-fill");
-const soundWave = document.getElementById("sound-wave");
-const playerFullscreenBtn = document.getElementById("player-fullscreen-btn");
 
 /* ==========================================================================
    INITIALIZATION
    ========================================================================== */
 document.addEventListener("DOMContentLoaded", () => {
+  initMotion();
   initCountrySwitcher();
   initCareersAccordion();
   initModalListeners();
@@ -434,95 +426,8 @@ function initScrollSpy() {
 }
 
 /* ==========================================================================
-   SHOWREEL CANVAS PARTICLE PHYSICS SIMULATOR
+   SHOWREEL PLAYBACK
    ========================================================================== */
-let canvasContext = null;
-let animationFrameId = null;
-let isPlaying = true;
-let canvasParticles = [];
-let sparks = [];
-let mouse = { x: null, y: null, active: false, radius: 120 };
-let durationSeconds = 0; // Total 108 seconds (01:48)
-let timerInterval = null;
-
-// Particle Properties
-const PARTICLE_COUNT = 65;
-const PARTICLE_COLOR = "rgba(37, 99, 235, 0.75)";
-const NODE_LINE_COLOR = "rgba(14, 39, 93, 0.18)";
-const MOUSE_LINE_COLOR = "rgba(37, 99, 235, 0.4)";
-
-class NodeParticle {
-  constructor(w, h) {
-    this.canvasWidth = w;
-    this.canvasHeight = h;
-    this.x = Math.random() * w;
-    this.y = Math.random() * h;
-    this.vx = (Math.random() - 0.5) * 1.5;
-    this.vy = (Math.random() - 0.5) * 1.5;
-    this.radius = Math.random() * 3.5 + 1.5;
-    this.pulseSpeed = Math.random() * 0.05 + 0.01;
-    this.pulseVal = Math.random();
-  }
-
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-
-    // Bounce check
-    if (this.x < 0 || this.x > this.canvasWidth) this.vx *= -1;
-    if (this.y < 0 || this.y > this.canvasHeight) this.vy *= -1;
-
-    // Orbital pulse visual effect
-    this.pulseVal += this.pulseSpeed;
-  }
-
-  draw(ctx) {
-    ctx.beginPath();
-    // Glowing nodes representing digital market channels
-    const dynamicRadius = this.radius + Math.sin(this.pulseVal) * 1.2;
-    ctx.arc(this.x, this.y, Math.max(0.5, dynamicRadius), 0, Math.PI * 2);
-    ctx.fillStyle = PARTICLE_COLOR;
-    ctx.fill();
-    
-    if (this.radius > 3.5) {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, dynamicRadius * 2, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(37, 99, 235, 0.08)";
-      ctx.fill();
-    }
-  }
-}
-
-class SparkParticle {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.vx = (Math.random() - 0.5) * 8;
-    this.vy = (Math.random() - 0.5) * 8;
-    this.alpha = 1.0;
-    this.decay = Math.random() * 0.03 + 0.015;
-    this.color = Math.random() > 0.4 ? "#2563EB" : "#0E275D";
-  }
-
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    this.vx *= 0.96; // drag
-    this.vy *= 0.96;
-    this.alpha -= this.decay;
-  }
-
-  draw(ctx) {
-    ctx.save();
-    ctx.globalAlpha = this.alpha;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, Math.random() * 3 + 1, 0, Math.PI * 2);
-    ctx.fillStyle = this.color;
-    ctx.fill();
-    ctx.restore();
-  }
-}
-
 // The old particle "LIVE SIMULATION" placeholder was replaced by a real
 // Remotion-rendered showreel video. These two functions keep the existing
 // open/close call sites working by driving the <video> element instead.
@@ -541,149 +446,265 @@ function stopShowreelCanvas() {
   try { video.currentTime = 0; } catch (e) {}
 }
 
-function resizeCanvas() {
-  const container = particleCanvas.parentElement;
-  particleCanvas.width = container.clientWidth;
-  particleCanvas.height = container.clientHeight;
-}
+/* ==========================================================================
+   MOTION LAYER
+   Scroll reveals, parallax, ambient particles and click feedback.
 
-function handleCanvasMouseMove(e) {
-  const rect = particleCanvas.getBoundingClientRect();
-  mouse.x = e.clientX - rect.left;
-  mouse.y = e.clientY - rect.top;
-  mouse.active = true;
-}
+   Everything here is additive and markup-free: reveal targets are tagged at
+   runtime rather than in the HTML, and the ambient canvas is created here, so
+   the document structure is untouched. Every effect is skipped outright when
+   the visitor asks for reduced motion.
+   ========================================================================== */
+const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-function handleCanvasMouseLeave() {
-  mouse.active = false;
-}
+/* --------------------------------------------------------------------------
+   Scroll-triggered staggered reveals
+   -------------------------------------------------------------------------- */
+// Grouped so siblings within one block stagger against each other.
+const REVEAL_SELECTORS = [
+  ".section-header",
+  ".sub-header",
+  ".about-lead",
+  ".about-details",
+  ".purpose-list li",
+  ".story-banner",
+  ".welcome-card",
+  ".story-body",
+  ".mission-list li",
+  ".industry-card",
+  ".service-box",
+  ".usp-statement",
+  ".careers-intro",
+  ".career-item",
+  ".service-row",
+  ".client-tile",
+  ".testimonial-card",
+  ".stat-item",
+  ".showreel-card",
+  ".footer-col",
+  ".footer-brand"
+];
 
-function handleCanvasClick(e) {
-  const rect = particleCanvas.getBoundingClientRect();
-  const clickX = e.clientX - rect.left;
-  const clickY = e.clientY - rect.top;
-  
-  // Generate interactive sparks on clicking canvas
-  for (let i = 0; i < 20; i++) {
-    sparks.push(new SparkParticle(clickX, clickY));
-  }
-}
+function initReveals() {
+  const seen = new Set();
 
-/* Controls Click Callbacks */
-function togglePlayback() {
-  isPlaying = !isPlaying;
-  updatePlayPauseButton();
-  
-  if (isPlaying) {
-    simulationLoop();
-    soundWave.classList.add("playing");
-  } else {
-    cancelAnimationFrame(animationFrameId);
-    soundWave.classList.remove("playing");
-  }
-}
-
-function updatePlayPauseButton() {
-  // Pause icon: <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-  // Play icon: <path d="M8 5v14l11-7z"/>
-  if (isPlaying) {
-    playPauseSvg.innerHTML = `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="currentColor"/>`;
-  } else {
-    playPauseSvg.innerHTML = `<path d="M8 5v14l11-7z" fill="currentColor"/>`;
-  }
-}
-
-function toggleAudioSim() {
-  soundWave.classList.toggle("playing");
-}
-
-function toggleFullscreen() {
-  const container = particleCanvas.parentElement;
-  if (!document.fullscreenElement) {
-    container.requestFullscreen().catch(err => {
-      console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+  REVEAL_SELECTORS.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      if (seen.has(el)) return;
+      seen.add(el);
+      el.setAttribute("data-reveal", "");
+      // Stagger against the matching siblings inside the same parent, capped
+      // so a twelve-tile grid doesn't end on a second-long delay.
+      const sibs = Array.from(el.parentElement.children).filter(c => c.matches(sel));
+      el.style.setProperty("--reveal-i", Math.min(sibs.indexOf(el), 7));
     });
-  } else {
-    document.exitFullscreen();
-  }
-}
-
-function scrubTimeline(e) {
-  const rect = timelineSliderBg.getBoundingClientRect();
-  const clickFraction = (e.clientX - rect.left) / rect.width;
-  durationSeconds = Math.floor(clickFraction * 108);
-  updateTimelineUI();
-}
-
-function updateTimelineUI() {
-  const minutes = Math.floor(durationSeconds / 60);
-  const seconds = durationSeconds % 60;
-  timeElapsedDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-  
-  const percentage = (durationSeconds / 108) * 100;
-  timelineSliderFill.style.width = `${percentage}%`;
-}
-
-/* SIMULATION RENDER ENGINE */
-function simulationLoop() {
-  if (!isPlaying) return;
-  
-  canvasContext.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-  
-  // Render Connecting Nodes
-  for (let i = 0; i < canvasParticles.length; i++) {
-    const p1 = canvasParticles[i];
-    p1.update();
-    p1.draw(canvasContext);
-    
-    // Gravity influence if mouse is active
-    if (mouse.active) {
-      const dx = mouse.x - p1.x;
-      const dy = mouse.y - p1.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      
-      if (dist < mouse.radius) {
-        // Draw connection to cursor
-        const alpha = (1 - dist / mouse.radius) * 0.4;
-        canvasContext.beginPath();
-        canvasContext.moveTo(p1.x, p1.y);
-        canvasContext.lineTo(mouse.x, mouse.y);
-        canvasContext.strokeStyle = `rgba(37, 99, 235, ${alpha})`;
-        canvasContext.lineWidth = 1;
-        canvasContext.stroke();
-        
-        // Gentle pull towards cursor
-        p1.x += (dx / dist) * 0.45;
-        p1.y += (dy / dist) * 0.45;
-      }
-    }
-
-    // Connect node-to-node
-    for (let j = i + 1; j < canvasParticles.length; j++) {
-      const p2 = canvasParticles[j];
-      const dx = p1.x - p2.x;
-      const dy = p1.y - p2.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      
-      const connectDist = 130;
-      if (dist < connectDist) {
-        const alpha = (1 - dist / connectDist) * 0.15;
-        canvasContext.beginPath();
-        canvasContext.moveTo(p1.x, p1.y);
-        canvasContext.lineTo(p2.x, p2.y);
-        canvasContext.strokeStyle = `rgba(14, 39, 93, ${alpha})`;
-        canvasContext.lineWidth = 0.8;
-        canvasContext.stroke();
-      }
-    }
-  }
-
-  // Update & Draw Sparks
-  sparks = sparks.filter(spark => spark.alpha > 0.01);
-  sparks.forEach(spark => {
-    spark.update();
-    spark.draw(canvasContext);
   });
 
-  animationFrameId = requestAnimationFrame(simulationLoop);
+  const targets = document.querySelectorAll("[data-reveal]");
+  if (REDUCED_MOTION || !("IntersectionObserver" in window)) {
+    targets.forEach(el => el.classList.add("is-revealed"));
+    return;
+  }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-revealed");
+      io.unobserve(entry.target);           // reveal once, then stop watching
+    });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.08 });
+
+  targets.forEach(el => io.observe(el));
+
+  // Safety net. A fast flick or an in-page anchor jump can move the viewport
+  // past an element without the observer ever reporting it as intersecting,
+  // which would strand that content at opacity 0. Sweep anything that is at
+  // or above the fold and reveal it regardless.
+  let sweeping = false;
+  function sweep() {
+    sweeping = false;
+    const limit = window.innerHeight * 0.92;
+    let remaining = 0;
+    targets.forEach(el => {
+      if (el.classList.contains("is-revealed")) return;
+      if (el.getBoundingClientRect().top < limit) {
+        el.classList.add("is-revealed");
+        io.unobserve(el);
+      } else {
+        remaining++;
+      }
+    });
+    if (!remaining) {
+      window.removeEventListener("scroll", onScroll);
+    }
+  }
+  function onScroll() {
+    if (sweeping) return;
+    sweeping = true;
+    requestAnimationFrame(sweep);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  sweep();
+}
+
+/* --------------------------------------------------------------------------
+   Parallax depth
+   Background layers travel slower than the page. Offsets are written to a CSS
+   custom property so each layer's own transform (centring, cover-scaling) is
+   preserved instead of being overwritten.
+   -------------------------------------------------------------------------- */
+function initParallax() {
+  if (REDUCED_MOTION) return;
+
+  const layers = [
+    { el: document.querySelector(".hero-backdrop img"), speed: 0.20, max: 140 },
+    { el: document.querySelector(".story-banner img"), speed: 0.12, max: 26 },
+    { el: document.querySelector(".cta-band-bg"), speed: 0.14, max: 34 }
+  ].filter(l => l.el);
+
+  if (!layers.length) return;
+
+  let ticking = false;
+
+  function update() {
+    ticking = false;
+    const vh = window.innerHeight;
+    for (const layer of layers) {
+      const rect = layer.el.getBoundingClientRect();
+      if (rect.bottom < -200 || rect.top > vh + 200) continue;   // offscreen
+      // Distance of this layer's centre from the viewport centre.
+      const delta = (rect.top + rect.height / 2) - vh / 2;
+      const offset = Math.max(-layer.max, Math.min(layer.max, -delta * layer.speed));
+      layer.el.style.setProperty("--py", offset.toFixed(1) + "px");
+    }
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  update();
+}
+
+/* --------------------------------------------------------------------------
+   Ambient particle field
+   A slow drift of gold nodes behind the page, with hairlines between near
+   neighbours. Canvas is created here rather than in the markup.
+   -------------------------------------------------------------------------- */
+function initAmbientField() {
+  if (REDUCED_MOTION) return;
+
+  const canvas = document.createElement("canvas");
+  canvas.className = "ambient-field";
+  canvas.setAttribute("aria-hidden", "true");
+  document.body.insertBefore(canvas, document.body.firstChild);
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  const LINK_DIST = 132;
+  let w = 0, h = 0, dpr = 1, nodes = [], rafId = null;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);   // cap cost on retina
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    // Scale the population to the viewport so phones don't pay desktop cost.
+    const count = Math.round(Math.min(70, Math.max(18, (w * h) / 26000)));
+    nodes = [];
+    for (let i = 0; i < count; i++) {
+      nodes.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.16,
+        vy: (Math.random() - 0.5) * 0.16,
+        r: 0.8 + Math.random() * 1.5,
+        a: 0.25 + Math.random() * 0.45
+      });
+    }
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, w, h);
+
+    for (let i = 0; i < nodes.length; i++) {
+      const p = nodes[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      // Wrap rather than bounce, so there is no visible edge rhythm.
+      if (p.x < -20) p.x = w + 20; else if (p.x > w + 20) p.x = -20;
+      if (p.y < -20) p.y = h + 20; else if (p.y > h + 20) p.y = -20;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(212, 175, 55, " + p.a.toFixed(3) + ")";
+      ctx.fill();
+
+      for (let j = i + 1; j < nodes.length; j++) {
+        const q = nodes[j];
+        const dx = p.x - q.x, dy = p.y - q.y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 > LINK_DIST * LINK_DIST) continue;       // cheaper than sqrt
+        const alpha = (1 - Math.sqrt(d2) / LINK_DIST) * 0.16;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(q.x, q.y);
+        ctx.strokeStyle = "rgba(212, 175, 55, " + alpha.toFixed(3) + ")";
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+      }
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function start() { if (!rafId) rafId = requestAnimationFrame(frame); }
+  function stop() { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+
+  resize();
+  start();
+  window.addEventListener("resize", () => { resize(); }, { passive: true });
+  // Don't burn frames on a hidden tab.
+  document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+}
+
+/* --------------------------------------------------------------------------
+   Tactile click feedback
+   A ripple that originates at the pointer, so a press feels located rather
+   than global.
+   -------------------------------------------------------------------------- */
+function initRipples() {
+  if (REDUCED_MOTION) return;
+
+  document.addEventListener("pointerdown", e => {
+    const target = e.target.closest(".btn, .play-btn-circle, .client-tile, .career-summary");
+    if (!target) return;
+
+    const rect = target.getBoundingClientRect();
+    const ripple = document.createElement("span");
+    ripple.className = "ripple";
+    // Cover the furthest corner from the press point.
+    const size = Math.max(rect.width, rect.height) * 2;
+    ripple.style.width = ripple.style.height = size + "px";
+    ripple.style.left = (e.clientX - rect.left - size / 2) + "px";
+    ripple.style.top = (e.clientY - rect.top - size / 2) + "px";
+
+    if (getComputedStyle(target).position === "static") target.style.position = "relative";
+    target.appendChild(ripple);
+    ripple.addEventListener("animationend", () => ripple.remove(), { once: true });
+  }, { passive: true });
+}
+
+function initMotion() {
+  initReveals();
+  initParallax();
+  initAmbientField();
+  initRipples();
 }

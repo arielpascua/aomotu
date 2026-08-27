@@ -2,26 +2,37 @@
    DESIGN SYSTEM & VARIABLES
    ========================================================================== */
 :root {
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F5F7FC;
-  --bg-tertiary: #FFFFFF;
-  --text-primary: #0E275D;
-  --text-secondary: #5A6473;
-  --text-muted: #6B7280;
-  
-  --accent-gold: #2563EB;
-  --accent-gold-hover: #1D4ED8;
-  --accent-purple: #0E275D;
-  --accent-blue: #2563EB;
-  --accent-yellow: #FFC909;
+  /* Surfaces, darkest first. */
+  --bg-primary: #0A0A0B;
+  --bg-secondary: #121215;
+  --bg-tertiary: #1A1A1F;
+  --bg-raised: #24242B;
+
+  /* Warm off-white type, never pure #FFF, which glares on black. */
+  --text-primary: #F5F0E4;
+  --text-secondary: #BAB2A2;
+  --text-muted: #9C9484;
+
+  /* The accent variables keep their original names so existing rules carry
+     over untouched; only the values move from blue to gold. */
+  --accent-gold: #D4AF37;
+  --accent-gold-hover: #EBC969;
+  --accent-purple: #1A1A1F;
+  --accent-blue: #D4AF37;
+  --accent-yellow: #F2D06B;
+
+  /* Triplets, so alpha tints compose from one source of truth. */
+  --gold-rgb: 212, 175, 55;
+  --line-rgb: 245, 240, 228;
+  --shadow-rgb: 0, 0, 0;
   
   --font-space: 'Space Grotesk', sans-serif;
   --font-outfit: 'Outfit', sans-serif;
   --font-inter: 'Inter', sans-serif;
   
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(14, 39, 93, 0.08);
-  --glass-shadow: 0 20px 50px rgba(14, 39, 93, 0.12);
+  --glass-bg: rgba(18, 18, 21, 0.82);
+  --glass-border: rgba(var(--line-rgb), 0.10);
+  --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
   
   --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-fast: all 0.2s ease;
@@ -58,7 +69,12 @@ body::-webkit-scrollbar {
   width: 8px;
 }
 body::-webkit-scrollbar-track {
-  background: var(--bg-tertiary);
+  background: var(--bg-secondary);
+}
+
+::selection {
+  background: rgba(var(--gold-rgb), 0.28);
+  color: var(--text-primary);
 }
 body::-webkit-scrollbar-thumb {
   background: var(--accent-gold);
@@ -178,7 +194,7 @@ button {
 .btn-primary:hover {
   background: var(--accent-gold-hover);
   color: var(--bg-tertiary);
-  box-shadow: 0 0 25px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 0 25px rgba(var(--gold-rgb), 0.4);
   transform: translateY(-2px);
 }
 .btn-primary:hover .btn-arrow {
@@ -186,15 +202,15 @@ button {
 }
 
 .btn-outline {
-  border: 1px solid rgba(100, 116, 139, 0.2);
+  border: 1px solid rgba(var(--line-rgb), 0.3);
   color: var(--text-primary);
-  background: rgba(100, 116, 139, 0.02);
+  background: rgba(var(--line-rgb), 0.036);
   backdrop-filter: blur(10px);
 }
 .btn-outline:hover {
   border-color: var(--accent-gold);
   color: var(--accent-gold);
-  background: rgba(37, 99, 235, 0.05);
+  background: rgba(var(--gold-rgb), 0.05);
   transform: translateY(-2px);
 }
 
@@ -310,12 +326,12 @@ button {
   width: 52px;
   height: 52px;
   display: block;
-  filter: drop-shadow(0 2px 8px rgba(37, 99, 235, 0.25));
+  filter: drop-shadow(0 2px 8px rgba(var(--gold-rgb), 0.25));
   transition: var(--transition-smooth);
 }
 .logo-container:hover #logo-canvas {
   transform: scale(1.08);
-  filter: drop-shadow(0 3px 14px rgba(37, 99, 235, 0.5));
+  filter: drop-shadow(0 3px 14px rgba(var(--gold-rgb), 0.5));
 }
 
 .orbit-ring-1 {
@@ -397,7 +413,7 @@ button {
   aspect-ratio: 1 / 1;
   height: auto;
   display: block;
-  filter: drop-shadow(0 12px 44px rgba(37, 99, 235, 0.22));
+  filter: drop-shadow(0 12px 44px rgba(var(--gold-rgb), 0.22));
 }
 
 /* Global Selector Box */
@@ -488,8 +504,8 @@ button {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  border: 1px solid rgba(100, 116, 139, 0.08);
-  background: rgba(100, 116, 139, 0.02);
+  border: 1px solid rgba(var(--line-rgb), 0.144);
+  background: rgba(var(--line-rgb), 0.036);
   color: var(--text-secondary);
   display: flex;
   align-items: center;
@@ -499,8 +515,8 @@ button {
 .arrow-btn:hover {
   border-color: var(--accent-gold);
   color: var(--text-primary);
-  background: rgba(37, 99, 235, 0.08);
-  box-shadow: 0 0 15px rgba(37, 99, 235, 0.15);
+  background: rgba(var(--gold-rgb), 0.08);
+  box-shadow: 0 0 15px rgba(var(--gold-rgb), 0.15);
   transform: scale(1.05);
 }
 .arrow-btn:active {
@@ -519,18 +535,18 @@ button {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(100, 116, 139, 0.15);
+  background: rgba(var(--line-rgb), 0.27);
   transition: var(--transition-smooth);
   cursor: pointer;
   border: 1px solid transparent;
 }
 .country-dot:hover {
-  background: rgba(37, 99, 235, 0.5);
+  background: rgba(var(--gold-rgb), 0.5);
 }
 .country-dot.active {
   background: var(--accent-gold);
   transform: scale(1.3);
-  box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
+  box-shadow: 0 0 10px rgba(var(--gold-rgb), 0.6);
 }
 
 @media (max-width: 576px) {
@@ -549,7 +565,7 @@ button {
 .showreel-card {
   width: 100%;
   max-width: 680px;
-  background: rgba(245, 247, 252, 0.95);
+  background: rgba(26, 26, 31, 0.92);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 24px;
@@ -568,7 +584,7 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(14,39,93,0.05) 100%);
+  background: linear-gradient(135deg, rgba(var(--gold-rgb), 0.05) 0%, rgba(var(--shadow-rgb), 0.11) 100%);
   opacity: 0;
   transition: var(--transition-smooth);
   z-index: 0;
@@ -576,8 +592,8 @@ button {
 
 .showreel-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(37, 99, 235, 0.25);
-  box-shadow: 0 25px 60px rgba(14, 39, 93, 0.5), 0 0 30px rgba(37, 99, 235, 0.05);
+  border-color: rgba(var(--gold-rgb), 0.25);
+  box-shadow: 0 25px 60px rgba(var(--shadow-rgb), 0.8), 0 0 30px rgba(var(--gold-rgb), 0.05);
 }
 .showreel-card:hover::before {
   opacity: 1;
@@ -622,7 +638,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 10px 25px rgba(var(--gold-rgb), 0.3);
   transition: var(--transition-smooth);
   position: relative;
   z-index: 2;
@@ -636,7 +652,7 @@ button {
 .showreel-card:hover .play-btn-circle {
   background: var(--accent-gold-hover);
   transform: scale(1.08);
-  box-shadow: 0 12px 30px rgba(100, 116, 139, 0.4);
+  box-shadow: 0 12px 30px rgba(var(--line-rgb), 0.3);
 }
 
 .play-pulse {
@@ -773,7 +789,7 @@ button {
 /* What We Think - Cards */
 .think-card {
   background: var(--bg-tertiary);
-  border: 1px solid rgba(100, 116, 139, 0.04);
+  border: 1px solid rgba(var(--line-rgb), 0.072);
   border-radius: 12px;
   padding: 36px;
   display: flex;
@@ -790,18 +806,18 @@ button {
   right: -100px;
   width: 200px;
   height: 200px;
-  background: radial-gradient(circle, rgba(14,39,93,0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--shadow-rgb), 0.264) 0%, transparent 70%);
   transition: var(--transition-smooth);
   pointer-events: none;
 }
 
 .think-card:hover {
   transform: translateY(-8px);
-  border-color: rgba(100, 116, 139, 0.08);
-  box-shadow: 0 15px 35px rgba(14, 39, 93, 0.4);
+  border-color: rgba(var(--line-rgb), 0.144);
+  box-shadow: 0 15px 35px rgba(var(--shadow-rgb), 0.8);
 }
 .think-card:hover .card-glow {
-  background: radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--gold-rgb), 0.08) 0%, transparent 70%);
   width: 250px;
   height: 250px;
 }
@@ -854,20 +870,21 @@ button {
 }
 .service-box:hover {
   transform: translateY(-5px);
-  border-color: rgba(37, 99, 235, 0.2);
-  box-shadow: 0 20px 40px rgba(14, 39, 93, 0.3);
+  border-color: rgba(var(--gold-rgb), 0.2);
+  box-shadow: 0 20px 40px rgba(var(--shadow-rgb), 0.66);
 }
 
 .service-icon {
+  color: var(--accent-gold);
   width: 64px;
   height: 64px;
-  background: rgba(37, 99, 235, 0.05);
+  background: rgba(var(--gold-rgb), 0.05);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 28px;
-  border: 1px solid rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(var(--gold-rgb), 0.1);
   transition: var(--transition-smooth);
 }
 .service-box:hover .service-icon {
@@ -876,7 +893,7 @@ button {
   transform: scale(1.05);
 }
 .service-box:hover .service-icon svg {
-  stroke: var(--bg-tertiary);
+  stroke: #0A0A0B;
 }
 
 .service-box h3 {
@@ -924,17 +941,17 @@ button {
 
 .career-item {
   background: var(--bg-tertiary);
-  border: 1px solid rgba(100, 116, 139, 0.04);
+  border: 1px solid rgba(var(--line-rgb), 0.072);
   border-radius: 10px;
   overflow: hidden;
   transition: var(--transition-smooth);
 }
 .career-item:hover {
-  border-color: rgba(100, 116, 139, 0.08);
+  border-color: rgba(var(--line-rgb), 0.144);
 }
 .career-item.expanded {
-  border-color: rgba(37, 99, 235, 0.2);
-  box-shadow: 0 10px 30px rgba(14,39,93,0.3);
+  border-color: rgba(var(--gold-rgb), 0.2);
+  box-shadow: 0 10px 30px rgba(var(--shadow-rgb), 0.66);
 }
 
 .career-summary {
@@ -1005,7 +1022,7 @@ button {
 .career-item.expanded .career-detail {
   max-height: 240px;
   padding: 20px 24px 24px;
-  border-color: rgba(100, 116, 139, 0.04);
+  border-color: rgba(var(--line-rgb), 0.072);
 }
 
 .career-detail p {
@@ -1020,15 +1037,15 @@ button {
 
 .industry-card {
   background: var(--bg-secondary);
-  border: 1px solid rgba(100, 116, 139, 0.03);
+  border: 1px solid rgba(var(--line-rgb), 0.054);
   border-radius: 12px;
   padding: 32px;
   transition: var(--transition-smooth);
 }
 .industry-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(37, 99, 235, 0.15);
-  background: rgba(37, 99, 235, 0.05);
+  border-color: rgba(var(--gold-rgb), 0.15);
+  background: rgba(var(--gold-rgb), 0.05);
 }
 
 .ind-tag {
@@ -1063,15 +1080,15 @@ button {
   /* Long titles ran straight into the body column without this. */
   column-gap: 32px;
   padding: 32px 0;
-  border-bottom: 1px solid rgba(100, 116, 139, 0.04);
+  border-bottom: 1px solid rgba(var(--line-rgb), 0.072);
   align-items: center;
   transition: var(--transition-smooth);
 }
 .service-row:first-child {
-  border-top: 1px solid rgba(100, 116, 139, 0.04);
+  border-top: 1px solid rgba(var(--line-rgb), 0.072);
 }
 .service-row:hover {
-  background: rgba(100, 116, 139, 0.01);
+  background: rgba(var(--line-rgb), 0.018);
   padding-left: 16px;
   padding-right: 16px;
 }
@@ -1111,8 +1128,8 @@ button {
    ========================================================================== */
 .marquee-wrapper {
   background: var(--bg-secondary);
-  border-top: 1px solid rgba(100, 116, 139, 0.04);
-  border-bottom: 1px solid rgba(100, 116, 139, 0.04);
+  border-top: 1px solid rgba(var(--line-rgb), 0.072);
+  border-bottom: 1px solid rgba(var(--line-rgb), 0.072);
   padding: 32px 0;
   overflow: hidden;
   width: 100%;
@@ -1186,7 +1203,7 @@ button {
 
 .nav-link:hover {
   color: var(--text-primary);
-  background: rgba(100, 116, 139, 0.04);
+  background: rgba(var(--line-rgb), 0.072);
 }
 
 .nav-link.active {
@@ -1223,7 +1240,7 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(14, 39, 93, 0.85);
+  background: rgba(var(--shadow-rgb), 0.8);
   backdrop-filter: blur(15px);
   display: flex;
   align-items: center;
@@ -1243,7 +1260,7 @@ button {
   background: var(--bg-secondary);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
-  box-shadow: 0 30px 80px rgba(14, 39, 93, 0.6);
+  box-shadow: 0 30px 80px rgba(var(--shadow-rgb), 0.8);
   position: relative;
   overflow: hidden;
   max-width: 90%;
@@ -1263,8 +1280,8 @@ button {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(100, 116, 139, 0.03);
-  border: 1px solid rgba(100, 116, 139, 0.05);
+  background: rgba(var(--line-rgb), 0.054);
+  border: 1px solid rgba(var(--line-rgb), 0.09);
   color: var(--text-secondary);
   display: flex;
   align-items: center;
@@ -1291,7 +1308,7 @@ button {
   width: 100%;
   height: 100%;
   position: relative;
-  background: #0E275D;
+  background: #0A0A0B;
 }
 
 /* Remotion Showreel Video */
@@ -1315,7 +1332,7 @@ button {
   left: 0;
   width: 100%;
   padding: 40px 32px 24px;
-  background: linear-gradient(to top, rgba(14, 39, 93, 0.9) 0%, rgba(14, 39, 93, 0.4) 60%, transparent 100%);
+  background: linear-gradient(to top, rgba(var(--shadow-rgb), 0.8) 0%, rgba(var(--shadow-rgb), 0.8) 60%, transparent 100%);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1367,8 +1384,8 @@ button {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(100, 116, 139, 0.08);
-  border: 1px solid rgba(100, 116, 139, 0.05);
+  background: rgba(var(--line-rgb), 0.144);
+  border: 1px solid rgba(var(--line-rgb), 0.09);
   transition: var(--transition-fast);
 }
 .control-btn:hover {
@@ -1390,7 +1407,7 @@ button {
 .timeline-slider-bg {
   flex: 1;
   height: 6px;
-  background: rgba(100, 116, 139, 0.15);
+  background: rgba(var(--line-rgb), 0.27);
   border-radius: 3px;
   position: relative;
   cursor: pointer;
@@ -1489,7 +1506,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 1px solid rgba(100, 116, 139, 0.03);
+  border-right: 1px solid rgba(var(--line-rgb), 0.054);
 }
 
 .contact-info-panel h3 {
@@ -1518,8 +1535,8 @@ button {
 .detail-icon {
   width: 44px;
   height: 44px;
-  background: rgba(100, 116, 139, 0.02);
-  border: 1px solid rgba(100, 116, 139, 0.05);
+  background: rgba(var(--line-rgb), 0.036);
+  border: 1px solid rgba(var(--line-rgb), 0.09);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1571,8 +1588,8 @@ button {
 .form-group textarea,
 .form-group select {
   width: 100%;
-  background: rgba(100, 116, 139, 0.02);
-  border: 1px solid rgba(100, 116, 139, 0.08);
+  background: rgba(var(--line-rgb), 0.036);
+  border: 1px solid rgba(var(--line-rgb), 0.144);
   border-radius: 8px;
   padding: 12px 16px;
   color: var(--text-primary);
@@ -1584,15 +1601,15 @@ button {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: rgba(100, 116, 139, 0.2);
+  color: rgba(var(--line-rgb), 0.3);
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
   border-color: var(--accent-gold);
-  background: rgba(37, 99, 235, 0.02);
-  box-shadow: 0 0 10px rgba(37, 99, 235, 0.1);
+  background: rgba(var(--gold-rgb), 0.02);
+  box-shadow: 0 0 10px rgba(var(--gold-rgb), 0.1);
 }
 
 /* Select wrapper styling for custom arrow */
@@ -1643,8 +1660,8 @@ button {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: rgba(37, 99, 235, 0.05);
-  border: 1px solid rgba(37, 99, 235, 0.1);
+  background: rgba(var(--gold-rgb), 0.05);
+  border: 1px solid rgba(var(--gold-rgb), 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1734,7 +1751,7 @@ button {
   align-items: flex-start;
   gap: 18px;
   padding: 22px 0;
-  border-bottom: 1px solid rgba(100, 116, 139, 0.08);
+  border-bottom: 1px solid rgba(var(--line-rgb), 0.144);
 }
 
 .purpose-num {
@@ -1777,7 +1794,8 @@ button {
 }
 
 .welcome-card {
-  background: var(--accent-purple);
+  background: linear-gradient(160deg, var(--bg-raised), var(--bg-tertiary));
+  border: 1px solid rgba(var(--gold-rgb), 0.22);
   border-radius: 16px;
   padding: 44px 40px;
   box-shadow: var(--glass-shadow);
@@ -1970,7 +1988,7 @@ button {
 .svc-group + .svc-group {
   margin-top: 26px;
   padding-top: 26px;
-  border-top: 1px solid rgba(100, 116, 139, 0.08);
+  border-top: 1px solid rgba(var(--line-rgb), 0.144);
 }
 
 .svc-group-title {
@@ -2030,7 +2048,7 @@ button {
 
 .client-tile {
   background: var(--bg-secondary);
-  border: 1px solid rgba(100, 116, 139, 0.06);
+  border: 1px solid rgba(var(--line-rgb), 0.108);
   border-radius: 12px;
   padding: 24px 22px;
   min-height: 162px;
@@ -2043,9 +2061,9 @@ button {
 }
 .client-tile:hover {
   transform: translateY(-4px);
-  border-color: rgba(37, 99, 235, 0.2);
-  background: rgba(37, 99, 235, 0.05);
-  box-shadow: 0 14px 30px rgba(14, 39, 93, 0.08);
+  border-color: rgba(var(--gold-rgb), 0.2);
+  background: rgba(var(--gold-rgb), 0.05);
+  box-shadow: 0 14px 30px rgba(var(--shadow-rgb), 0.176);
 }
 
 .client-name {
@@ -2065,7 +2083,15 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 6px;
+  margin-bottom: 14px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #F5F0E4;
+  transition: var(--transition-smooth);
+}
+.client-tile:hover .client-logo {
+  background: #FFFFFF;
+  box-shadow: 0 0 0 1px rgba(var(--gold-rgb), 0.35);
 }
 
 /* --logo-h is set per logo in the markup: a height derived from that mark's
@@ -2126,11 +2152,11 @@ button {
 }
 .testimonial-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(37, 99, 235, 0.2);
-  box-shadow: 0 18px 40px rgba(14, 39, 93, 0.1);
+  border-color: rgba(var(--gold-rgb), 0.2);
+  box-shadow: 0 18px 40px rgba(var(--shadow-rgb), 0.22);
 }
 .testimonial-card:hover .card-glow {
-  background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--gold-rgb), 0.1) 0%, transparent 70%);
   width: 250px;
   height: 250px;
 }
@@ -2158,15 +2184,15 @@ button {
   align-items: center;
   gap: 14px;
   padding-top: 22px;
-  border-top: 1px solid rgba(100, 116, 139, 0.08);
+  border-top: 1px solid rgba(var(--line-rgb), 0.144);
 }
 
 .author-avatar {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: rgba(37, 99, 235, 0.08);
-  border: 1px solid rgba(37, 99, 235, 0.16);
+  background: rgba(var(--gold-rgb), 0.08);
+  border: 1px solid rgba(var(--gold-rgb), 0.16);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2257,7 +2283,7 @@ button {
   align-items: center;
   gap: 16px;
   padding-top: 28px;
-  border-top: 1px solid rgba(100, 116, 139, 0.1);
+  border-top: 1px solid rgba(var(--line-rgb), 0.18);
   font-family: var(--font-space);
   font-size: 11px;
   letter-spacing: 1px;
@@ -2347,14 +2373,14 @@ button {
   width: 128%;
   min-width: 1150px;
   height: auto;
-  opacity: 0.55;
+  opacity: 0.40;
   /* Dissolve the image's own edges so it reads as atmosphere rather than a
      pasted rectangle. Masking the element beats overlaying a scrim, which
      would paint its own visible box. */
-  -webkit-mask-image: radial-gradient(ellipse 46% 48% at 50% 50%,
-    #000 0%, rgba(0, 0, 0, 0.82) 40%, transparent 73%);
-  mask-image: radial-gradient(ellipse 46% 48% at 50% 50%,
-    #000 0%, rgba(0, 0, 0, 0.82) 40%, transparent 73%);
+  -webkit-mask-image: radial-gradient(ellipse 52% 54% at 50% 50%,
+    #000 0%, rgba(0, 0, 0, 0.85) 42%, transparent 76%);
+  mask-image: radial-gradient(ellipse 52% 54% at 50% 50%,
+    #000 0%, rgba(0, 0, 0, 0.85) 42%, transparent 76%);
 }
 
 /* Blend the bottom of the hero into the section that follows. */
@@ -2363,9 +2389,9 @@ button {
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg,
-    rgba(255, 255, 255, 0) 40%,
-    rgba(255, 255, 255, 0.72) 62%,
-    var(--bg-primary) 88%);
+    rgba(10, 10, 11, 0) 32%,
+    rgba(10, 10, 11, 0.80) 58%,
+    var(--bg-primary) 84%);
 }
 
 /* Keep the hero content stacked above the wash. */
@@ -2403,8 +2429,8 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(37, 99, 235, 0.07);
-  border: 1px solid rgba(37, 99, 235, 0.14);
+  background: rgba(var(--gold-rgb), 0.07);
+  border: 1px solid rgba(var(--gold-rgb), 0.14);
   color: var(--accent-blue);
   transition: var(--transition-smooth);
 }
@@ -2415,7 +2441,7 @@ button {
 .industry-card:hover .card-icon {
   background: var(--accent-gold);
   border-color: var(--accent-gold);
-  color: var(--bg-tertiary);
+  color: #0A0A0B;
   transform: scale(1.06);
 }
 
@@ -2443,7 +2469,7 @@ button {
   transition: var(--transition-smooth);
 }
 .service-row:hover .row-num .icon {
-  color: var(--accent-purple);
+  color: var(--accent-gold-hover);
   transform: translateX(2px);
 }
 
@@ -2490,7 +2516,7 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.9;
+  opacity: 0.55;
 }
 
 .cta-band-inner {
@@ -2583,4 +2609,165 @@ button {
   height: 17px;
   color: var(--accent-blue);
   margin-top: 5px;
+}
+
+/* ==========================================================================
+   MOTION LAYER
+   Reveal targets are tagged by app.js at runtime, so nothing here depends on
+   extra markup. Each block degrades to "just show it" under reduced motion.
+   ========================================================================== */
+
+/* Ambient gold particle field, behind everything. */
+.ambient-field {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* Scroll-triggered staggered reveals. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--reveal-i, 0) * 65ms);
+}
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Parallax layers read --py, written by app.js on scroll. Each keeps its own
+   base transform; the offset is composed in rather than replacing it. */
+.hero-backdrop img {
+  transform: translate(-50%, calc(-48% + var(--py, 0px)));
+}
+.story-banner img,
+.cta-band-bg {
+  /* Slightly oversized so the travel never exposes an edge. */
+  transform: translate3d(0, var(--py, 0px), 0) scale(1.14);
+}
+
+/* Tactile click ripple. */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(var(--gold-rgb), 0.45) 0%,
+    rgba(var(--gold-rgb), 0.16) 45%,
+    rgba(var(--gold-rgb), 0) 70%);
+  transform: scale(0);
+  opacity: 0.9;
+  pointer-events: none;
+  animation: ripple-out 620ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 2;
+}
+@keyframes ripple-out {
+  to { transform: scale(1); opacity: 0; }
+}
+/* The ripple must not escape its rounded button. */
+.btn,
+.play-btn-circle,
+.client-tile,
+.career-summary {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   HOVER STATES
+   Gold lift and glow, so every interactive surface answers the pointer.
+   ========================================================================== */
+.btn {
+  position: relative;
+  transform: translateZ(0);
+}
+.btn-primary:hover {
+  box-shadow:
+    0 10px 30px rgba(var(--gold-rgb), 0.30),
+    0 0 0 1px rgba(var(--gold-rgb), 0.45);
+}
+.btn-outline:hover {
+  box-shadow: 0 8px 24px rgba(var(--gold-rgb), 0.16);
+}
+
+.industry-card:hover,
+.service-box:hover,
+.think-card:hover {
+  box-shadow:
+    0 18px 44px rgba(var(--shadow-rgb), 0.6),
+    0 0 0 1px rgba(var(--gold-rgb), 0.22);
+}
+
+.client-tile:hover {
+  box-shadow:
+    0 16px 36px rgba(var(--shadow-rgb), 0.55),
+    0 0 0 1px rgba(var(--gold-rgb), 0.28);
+}
+
+.showreel-card:hover {
+  box-shadow:
+    0 26px 60px rgba(var(--shadow-rgb), 0.65),
+    0 0 0 1px rgba(var(--gold-rgb), 0.3);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 4px;
+  height: 1px;
+  background: var(--accent-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-link { position: relative; }
+.nav-link:hover::after { transform: scaleX(1); }
+.nav-link.active::after { transform: scaleX(0); }
+
+/* Section numerals get a faint gold rule that grows in with the heading. */
+.section-num {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.section-num::after {
+  content: '';
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-gold), transparent);
+  transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+}
+[data-reveal].is-revealed .section-num::after { width: 132px; }
+
+/* ==========================================================================
+   REDUCED MOTION
+   One place that switches the whole motion layer off.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .section-num::after { width: 132px; transition: none; }
+  .hero-backdrop img { transform: translate(-50%, -48%); }
+  .story-banner img,
+  .cta-band-bg { transform: none; }
+  .ambient-field { display: none; }
+  .marquee-track { animation: none; }
+  .pulse-dot::after { animation: none; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
