@@ -2808,7 +2808,7 @@ button {
    ========================================================================== */
 .people-shot {
   margin: 40px 0 0;
-  max-width: 340px;
+  max-width: 510px;
   position: relative;
 }
 
@@ -2816,10 +2816,16 @@ button {
   display: block;
   width: 100%;
   height: auto;
-  /* The blob edge is baked into the asset's alpha; this just seats it. */
-  filter: drop-shadow(0 22px 46px rgba(var(--shadow-rgb), 0.7));
+  /* Unmasked, so the frame does the seating: the same corner radius the
+     cards use, plus a warm hairline where the photo meets the black page. */
+  border-radius: 14px;
+  box-shadow:
+    0 24px 54px rgba(var(--shadow-rgb), 0.72),
+    0 0 0 1px rgba(var(--gold-rgb), 0.22);
   transform: translate3d(0, var(--py, 0px), 0) scale(1);
-  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s ease;
 }
 
 /* A soft gold bloom behind the shape gives it somewhere to sit. */
@@ -2835,12 +2841,16 @@ button {
 }
 
 .people-shot:hover img {
-  transform: translate3d(0, var(--py, 0px), 0) scale(1.025);
+  transform: translate3d(0, var(--py, 0px), 0) scale(1.018);
+  box-shadow:
+    0 28px 62px rgba(var(--shadow-rgb), 0.8),
+    0 0 0 1px rgba(var(--gold-rgb), 0.45);
 }
 
 @media (max-width: 768px) {
   .people-shot {
-    max-width: 260px;
+    /* 510px would overrun the container's inner width on a phone. */
+    max-width: 100%;
     margin: 28px auto 0;
   }
 }
@@ -2853,6 +2863,6 @@ button {
 /* The value-proposition figure sits centred between the statement and the
    USP cards, rather than in a text column like the others. */
 .people-shot-wide {
-  max-width: 300px;
-  margin: 8px auto 44px;
+  max-width: 450px;
+  margin: 8px auto 48px;
 }
