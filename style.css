@@ -2849,3 +2849,10 @@ button {
   .people-shot img { transform: none; transition: none; }
   .people-shot:hover img { transform: none; }
 }
+
+/* The value-proposition figure sits centred between the statement and the
+   USP cards, rather than in a text column like the others. */
+.people-shot-wide {
+  max-width: 300px;
+  margin: 8px auto 44px;
+}
