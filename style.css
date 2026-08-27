@@ -2798,3 +2798,54 @@ button {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ==========================================================================
+   PEOPLE SHOTS
+   Illustrative stock figures, pre-masked to an organic blob with a soft edge
+   and graded to the page's warm curve so they read as part of the graphic
+   system rather than photographs pasted on top. Decorative only: none of
+   these depict identified staff, clients or locations.
+   ========================================================================== */
+.people-shot {
+  margin: 40px 0 0;
+  max-width: 340px;
+  position: relative;
+}
+
+.people-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* The blob edge is baked into the asset's alpha; this just seats it. */
+  filter: drop-shadow(0 22px 46px rgba(var(--shadow-rgb), 0.7));
+  transform: translate3d(0, var(--py, 0px), 0) scale(1);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* A soft gold bloom behind the shape gives it somewhere to sit. */
+.people-shot::before {
+  content: '';
+  position: absolute;
+  inset: 6% -12% -10% -12%;
+  background: radial-gradient(ellipse at 50% 55%,
+    rgba(var(--gold-rgb), 0.16) 0%,
+    rgba(var(--gold-rgb), 0.05) 45%,
+    transparent 72%);
+  z-index: -1;
+}
+
+.people-shot:hover img {
+  transform: translate3d(0, var(--py, 0px), 0) scale(1.025);
+}
+
+@media (max-width: 768px) {
+  .people-shot {
+    max-width: 260px;
+    margin: 28px auto 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .people-shot img { transform: none; transition: none; }
+  .people-shot:hover img { transform: none; }
+}

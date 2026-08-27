@@ -475,6 +475,7 @@ const REVEAL_SELECTORS = [
   ".service-box",
   ".usp-statement",
   ".careers-intro",
+  ".people-shot",
   ".career-item",
   ".service-row",
   ".client-tile",
@@ -561,6 +562,11 @@ function initParallax() {
     { el: document.querySelector(".story-banner img"), speed: 0.12, max: 26 },
     { el: document.querySelector(".cta-band-bg"), speed: 0.14, max: 34 }
   ].filter(l => l.el);
+
+  // The people shots drift a little against the copy beside them.
+  document.querySelectorAll(".people-shot img").forEach(el => {
+    layers.push({ el: el, speed: 0.055, max: 22 });
+  });
 
   if (!layers.length) return;
 
